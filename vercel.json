@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {"source":"/:path*.html","destination":"/:path*","permanent":true}
+  ],
+  "rewrites": [
+    {"source":"/nocatee-house-washing","destination":"/nocatee-house-washing.html"},
+    {"source":"/nocatee-roof-washing","destination":"/nocatee-roof-washing.html"}
+  ]
+}
