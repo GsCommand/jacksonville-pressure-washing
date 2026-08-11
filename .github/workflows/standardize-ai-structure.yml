@@ -1,0 +1,31 @@
+name: Standardize AI Structure
+
+on:
+  push:
+    paths:
+      - '.github/workflows/standardize-ai-structure.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  standardize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run one-time standardization
+        run: python tools/standardize-ai-structure.py
+      - name: Commit generated structure
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Standardize Learning Center AI and schema structure"
+          git push
