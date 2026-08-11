@@ -1,0 +1,50 @@
+name: Remove homepage service cards
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/remove-home-service-cards-trigger'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove three homepage service cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          targets = [
+              'Commercial Pressure Washing',
+              'Rust & Irrigation Stain Removal',
+              'Fence & Exterior Surface Cleaning',
+          ]
+          removed = 0
+          for title in targets:
+              pattern = r'<a class="service-card"[^>]*>\s*<h3>' + re.escape(title).replace(r'\&', r'(?:&|&amp;)') + r'</h3>.*?</a>'
+              s2, n = re.subn(pattern, '', s, count=1, flags=re.S|re.I)
+              if n == 0:
+                  # More permissive fallback: remove the service-card anchor containing this h3.
+                  pattern = r'<a class="service-card"[^>]*>.*?<h3>\s*' + re.escape(title).replace(r'\&', r'(?:&|&amp;)') + r'\s*</h3>.*?</a>'
+                  s2, n = re.subn(pattern, '', s, count=1, flags=re.S|re.I)
+              if n:
+                  s = s2
+                  removed += n
+              else:
+                  print('NOT FOUND:', title)
+          if removed != 3:
+              raise SystemExit(f'Expected to remove 3 cards; removed {removed}')
+          p.write_text(s, encoding='utf-8')
+          print('Removed', removed, 'homepage service cards')
+          PY
+      - name: Commit change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Remove three homepage service tabs" || exit 0
+          git push
