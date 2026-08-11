@@ -1,0 +1,25 @@
+name: Complete AI Entity Layer
+on:
+  push:
+    paths:
+      - '.github/workflows/complete-ai-entity-layer.yml'
+permissions:
+  contents: write
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Complete AI, schema, FAQ and redirect layer
+        run: python tools/complete-ai-entity-layer.py
+      - name: Commit completed structure
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm tools/complete-ai-entity-layer.py .github/workflows/complete-ai-entity-layer.yml
+          git add -A
+          git diff --cached --check
+          git commit -m "Complete Jacksonville Pressure Washing AI and entity structure"
+          git push
