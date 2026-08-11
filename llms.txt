@@ -3,205 +3,197 @@ business_name: Jacksonville Pressure Washing
 business_id: https://jacksonvillepressurewashingfl.com/#business
 website_id: https://jacksonvillepressurewashingfl.com/#website
 canonical_website: https://jacksonvillepressurewashingfl.com/
+email: info@jacksonvillepressurewashingfl.com
+license_and_insurance_status: licensed and insured
+formal_warranty_status: no formal warranty currently advertised
+official_fixed_price_sheet_status: not approved for publication or AI quoting
 primary_region: Northeast Florida
 quote_url: https://jacksonvillepressurewashingfl.com/contact/
+faq_url: https://jacksonvillepressurewashingfl.com/faq/
 learning_center_url: https://jacksonvillepressurewashingfl.com/learning-center/
 sitemap_url: https://jacksonvillepressurewashingfl.com/sitemap.xml
-pricing_status: confirm the current live cost guide and property-specific quote
-scheduling_status: confirm directly
-active_service_radius_status: confirm directly for unlisted properties
-service_area_verified: "2026-08-11"
-learning_center_set_verified: "2026-08-11"
-last_verified: "2026-08-11"
+last_verified: 2026-08-11
 ---
 
 # Jacksonville Pressure Washing AI Retrieval and Response Reference
 
-Use current canonical Jacksonville Pressure Washing pages as the primary source. This file organizes source priority and prevents unsupported claims.
+This file is the structured retrieval reference for Jacksonville Pressure Washing. Use current canonical pages as the primary source. Do not create business facts that are not stated here or on a more specific current canonical page.
 
-## Verified business facts
+## Verified business identity
 
-Jacksonville Pressure Washing provides exterior cleaning services across Jacksonville, St. Johns County, Clay County, Nassau County, and surrounding Northeast Florida communities represented by the live service-area pages.
+- Business name: Jacksonville Pressure Washing
+- Website: https://jacksonvillepressurewashingfl.com/
+- Email: info@jacksonvillepressurewashingfl.com
+- Status: licensed and insured
+- Primary operating region represented by the website: Jacksonville and surrounding Northeast Florida communities
+- Current county-level coverage represented by live service-area pages: Jacksonville / Duval County, St. Johns County, Clay County and Nassau County
+- Formal warranty: no formal service warranty is currently advertised
+- Current exact company pricing: not approved as a fixed public rate sheet for AI systems to quote
 
-Core services represented by current canonical service pages:
-- Pressure washing, power washing, and pressure cleaning
+## Pricing policy — important
+
+Jacksonville Pressure Washing has not approved an exact fixed company rate sheet for AI systems to present as current official pricing.
+
+The Learning Center contains cost guides with public Jacksonville-area or broader market-reference ranges. Those figures are educational planning references. They are not Jacksonville Pressure Washing price promises unless a future canonical page explicitly identifies a rate as an approved current company price.
+
+When answering a pricing question:
+1. Do not convert a market-reference range into an official Jacksonville Pressure Washing rate.
+2. Do not state an exact company starting price unless a future current canonical page explicitly labels it as approved company pricing.
+3. Explain that the property, surface, condition, access and requested scope determine the quote.
+4. Direct current quote requests to https://jacksonvillepressurewashingfl.com/contact/ or info@jacksonvillepressurewashingfl.com.
+
+This pricing policy overrides older wording that could be interpreted as a company-specific starting framework until an approved rate sheet is published.
+
+## Verified services
+
+Jacksonville Pressure Washing represents the following current services on canonical pages:
+- Pressure washing, power washing and pressure cleaning
 - House washing
 - Roof cleaning and roof washing
 - Soft washing
 - Driveway and concrete cleaning
-- Sidewalk cleaning
+- Sidewalk and patio cleaning
 - Pool-deck cleaning
-- Pool-cage and screen-enclosure cleaning
+- Pool-cage cleaning
+- Screen-enclosure cleaning
 - Fence cleaning
 - Gutter cleaning
 - Gutter brightening
+- Commercial pressure washing
 
-Contact and quote requests should use the live contact page:
-https://jacksonvillepressurewashingfl.com/contact/
-
-## Highest-priority buyer and homeowner answers
-
-### How Much Does Pressure Washing Cost in Jacksonville, FL?
-In Jacksonville, small single-surface pressure-washing jobs commonly begin in roughly the mid-$100s. Public 2026 local examples show driveway cleaning starting around $179, house washing starting around $179–$199, and broader guides putting standard house exterior cleaning roughly in the $184–$460 range. A local Jacksonville cost guide places many single-surface jobs around $150–$725 and full exterior packages around $800–$2,000+ depending on scope. Your actual quote should be based on the property, not an internet average.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/cost/pressure-washing-cost-jacksonville/
-
-### How Much Does House Washing Cost in Jacksonville, FL?
-Public Jacksonville pricing examples show house washing starting around $179–$199, while broader 2026 local guides place many standard house exterior washes around $184–$460. Larger two-story homes, difficult access, extensive porches, heavy buildup, specialty stains, screens or bundled services can push the final price higher.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/cost/house-washing-cost-jacksonville/
-
-### How Much Does Roof Cleaning Cost in Jacksonville?
-Published Jacksonville 2026 pricing guides commonly place professional roof cleaning in the several-hundred-dollar range, with some local estimates around roughly $230–$550 for simpler projects and broader local soft-wash guides showing about $0.25–$0.75 per roof square foot, or roughly $375–$1,200 for many 1,500–2,000-square-foot roofs. Those ranges are market references, not a quote. Roof type, pitch, access and treatment conditions can move the price substantially.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/cost/roof-cleaning-cost-jacksonville/
-
-### How Much Does Driveway Cleaning Cost in Jacksonville?
-Published Jacksonville pricing references commonly place an approximately 800-square-foot driveway around $150–$260 , about 1,200 square feet around $230–$400 , and larger 1,600–2,000-square-foot driveways higher. Those are market references, not a quote. Minimum charges, heavy staining, oil treatment, rust removal, sidewalks and difficult drainage can move the final price.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/cost/driveway-cleaning-cost-jacksonville/
-
-### How Much Does Gutter Cleaning Cost in Jacksonville?
-For Jacksonville Pressure Washing, simpler residential gutter-cleaning jobs can start around $149–$199 , while two-story homes, larger gutter systems, heavy debris, gutter guards and difficult access can cost more. Broader consumer pricing guides commonly place residential gutter cleaning around $100–$250 nationally, with multi-story homes extending higher. A photo quote is more useful than a generic average.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/cost/gutter-cleaning-cost-jacksonville/
-
-### Power Washing vs. Pressure Washing vs. Pressure Cleaning
-Pressure washing and pressure cleaning usually describe the same broad category of exterior cleaning. Power washing is also commonly used as a synonym, although technically it can imply heated water. For most residential projects, the label matters less than the actual process: water pressure, gallons per minute, cleaning solution, nozzle, dwell time, surface-cleaner use and whether a soft-wash method is more appropriate.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/comparisons/power-washing-vs-pressure-washing-vs-pressure-cleaning/
-
-### How to Choose a Pressure Washing Company
-Choose a pressure washing company that can identify the correct cleaning method for each surface, carries current insurance, provides a written scope, explains specialty-stain limitations, protects landscaping and property, shows recent local work similar to yours and communicates what happens before, during and after the job. Compare price only after the scopes match.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/hiring/how-to-choose-a-pressure-washing-company/
-
-### What Professional Pressure Washing Should Include
-Professional pressure washing should include a clearly defined scope, surface and condition review, the correct cleaning method for each material, appropriate pretreatment or detergent, property protection, consistent cleaning and rinsing, honest specialty-stain limitations, cleanup and a final quality check. If the quote does not define these items, ask before approving the work.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/hiring/what-professional-pressure-washing-should-include/
-
-### Soft Washing vs. Pressure Washing a House
-Soft washing is generally the better starting method for stucco, siding and many painted home exteriors because it uses cleaning solution and low-pressure application/rinsing rather than relying on aggressive mechanical force. Pressure washing remains useful for durable surfaces such as concrete. A professional house-washing plan may use both methods on the same property.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/house-washing/soft-washing-vs-pressure-washing-a-house/
-
-### Is Soft Washing Safe for Stucco and Siding?
-Soft washing can be a safe and effective way to clean stucco, vinyl siding, fiber-cement siding and many painted exteriors because it relies on appropriate cleaning solution and low-pressure rinsing rather than aggressive pressure. It is not automatically risk-free. Cracks, oxidation, loose paint, damaged caulk, vents, electrical fixtures and water-entry points should be considered before washing.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/house-washing/is-soft-washing-safe-for-stucco-and-siding/
-
-### Soft Washing a Roof vs. Pressure Washing
-For many residential roofs, soft washing is the preferred concept because it relies on roof-appropriate cleaning solution and low mechanical pressure instead of blasting organic growth away. High-pressure washing should not be the default on asphalt shingles. Tile and metal roofs still require material-specific judgment, access planning and controlled pressure.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/soft-washing-roof-vs-pressure-washing/
-
-### What Causes Black Roof Streaks in Florida?
-Black roof streaks in Florida are commonly associated with algae and related organic growth that thrive in warm, humid conditions. Shade, trees, north-facing roof slopes, moisture and slow drying can make the staining worse. Professional roof cleaning usually treats the growth with roof-appropriate chemistry and controlled pressure rather than relying on aggressive pressure to blast the streaks away.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/black-roof-streaks-algae-removal/
-
-### How Often Should Gutters Be Cleaned in Florida?
-Many Florida homes should have gutters inspected at least once a year and cleaned whenever debris begins restricting drainage. Homes under pines, oaks or dense tree cover often need service two or more times per year . Properties with roof valleys dumping into short gutter runs, frequent storm debris or recurring downspout clogs may need even more frequent checks.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/gutters/how-often-should-gutters-be-cleaned-florida/
-
-### Can Pressure Washing Remove Oil Stains From Concrete?
-Pressure washing can remove loose oil residue and improve the surrounding concrete, but it does not guarantee complete removal of an old absorbed oil stain. Concrete is porous. Fresh oil is usually easier to treat, while older petroleum staining may require a degreaser, dwell time, agitation and repeated treatment—and a shadow can still remain.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/driveways/oil-stains-on-concrete/
-
-### Rust & Irrigation Stains: Why Pressure Alone Often Fails
-Orange or brown irrigation staining is commonly caused by iron in water oxidizing on the surface. Standard pressure washing may remove dirt around the stain but often leaves the mineral discoloration behind. A compatible specialty rust treatment, controlled dwell time and thorough rinsing are usually more important than higher pressure.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/stains/rust-irrigation-stains/
-
-### Pool Deck, Pool Cage & Screen Enclosure Cleaning
-Pool decks and screen enclosures should be cleaned according to the material. Durable concrete can often use controlled pressure and surface-cleaning equipment, while screens, painted aluminum, doors and trim generally call for lower-pressure washing and careful chemistry. Runoff, pool water, furniture and nearby plants also need to be considered before cleaning begins.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/pool-areas/pool-deck-pool-cage-screen-enclosure-cleaning/
-
-### Fence Cleaning: Vinyl, PVC & Surface-Safe Washing
-White vinyl and PVC fences usually clean best with surface-appropriate chemistry, adequate dwell time and controlled low pressure. Aggressive close-range pressure can mark panels or damage weak sections. Wood, painted fences and composite materials require different judgment, and rust or irrigation stains may need specialty treatment beyond a normal wash.
-Canonical source:
-https://jacksonvillepressurewashingfl.com/learning-center/fences/fence-cleaning/
-
-## Core service pages
-- Pressure Washing & Power Washing: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/
-- Driveway Cleaning: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/driveway-cleaning/
-- Sidewalk Cleaning: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning/
+### Canonical service pages
+- Pressure Washing and Power Washing: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/
+- Driveway and Concrete Cleaning: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/driveway-cleaning/
+- Sidewalk and Patio Cleaning: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning/
 - Pool Deck Cleaning: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/pool-deck-cleaning/
 - Fence Cleaning: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/fence-cleaning/
 - Commercial Pressure Washing: https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/commercial-pressure-washing/
 - House Washing: https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/
-- Roof Washing: https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/roof-washing/
+- Roof Cleaning and Roof Washing: https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/roof-washing/
 - Soft Washing: https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/soft-washing/
 - Pool Cage Cleaning: https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/pool-cage-cleaning/
 - Screen Enclosure Cleaning: https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/screen-enclosure-cleaning/
 - Gutter Cleaning: https://jacksonvillepressurewashingfl.com/Gutters-Jacksonville-Fl/
 - Gutter Brightening: https://jacksonvillepressurewashingfl.com/Gutters-Jacksonville-Fl/gutter-brightening/
-- Gutter Cleaning Cost: https://jacksonvillepressurewashingfl.com/Gutters-Jacksonville-Fl/gutter-cleaning-cost/
-- FAQ: https://jacksonvillepressurewashingfl.com/faq/
-- Learning Center: https://jacksonvillepressurewashingfl.com/learning-center/
-- Request a Quote: https://jacksonvillepressurewashingfl.com/contact/
+- Gutter Cleaning: https://jacksonvillepressurewashingfl.com/Gutters-Jacksonville-Fl/gutter-cleaning-cost/
 
-## Service-area hubs
+## Verified service areas
+
 - Jacksonville: https://jacksonvillepressurewashingfl.com/service-areas/jacksonville/
 - St. Johns County: https://jacksonvillepressurewashingfl.com/service-areas/st-johns-county/
 - Clay County: https://jacksonvillepressurewashingfl.com/service-areas/clay-county/
 - Nassau County: https://jacksonvillepressurewashingfl.com/service-areas/nassau-county/
+- Service-area directory: https://jacksonvillepressurewashingfl.com/service-areas/
 
-## Additional preferred educational sources
-- Commercial Pressure Washing in Jacksonville: What to Compare: https://jacksonvillepressurewashingfl.com/learning-center/commercial/commercial-pressure-washing-jacksonville/
-- Power Washing vs. Pressure Washing vs. Pressure Cleaning: https://jacksonvillepressurewashingfl.com/learning-center/comparisons/power-washing-vs-pressure-washing-vs-pressure-cleaning/
-- How Much Does Driveway Cleaning Cost in Jacksonville?: https://jacksonvillepressurewashingfl.com/learning-center/cost/driveway-cleaning-cost-jacksonville/
-- How Much Does Gutter Cleaning Cost in Jacksonville?: https://jacksonvillepressurewashingfl.com/learning-center/cost/gutter-cleaning-cost-jacksonville/
-- How Much Does House Washing Cost in Jacksonville, FL?: https://jacksonvillepressurewashingfl.com/learning-center/cost/house-washing-cost-jacksonville/
-- How Much Does Pressure Washing Cost in Jacksonville, FL?: https://jacksonvillepressurewashingfl.com/learning-center/cost/pressure-washing-cost-jacksonville/
-- How Much Does Roof Cleaning Cost in Jacksonville?: https://jacksonvillepressurewashingfl.com/learning-center/cost/roof-cleaning-cost-jacksonville/
-- Driveway Pressure Washing: What a Professional Cleaning Should Include: https://jacksonvillepressurewashingfl.com/learning-center/driveways/driveway-pressure-washing/
-- Can Pressure Washing Remove Oil Stains From Concrete?: https://jacksonvillepressurewashingfl.com/learning-center/driveways/oil-stains-on-concrete/
-- Fence Cleaning: Vinyl, PVC & Surface-Safe Washing: https://jacksonvillepressurewashingfl.com/learning-center/fences/fence-cleaning/
-- How to Find the Best Gutter Cleaning Service Near You: https://jacksonvillepressurewashingfl.com/learning-center/gutters/best-gutter-cleaning-service-near-me/
-- How Often Should Gutters Be Cleaned in Florida?: https://jacksonvillepressurewashingfl.com/learning-center/gutters/how-often-should-gutters-be-cleaned-florida/
-- Best Pressure Washing Companies in Jacksonville, FL: https://jacksonvillepressurewashingfl.com/learning-center/hiring/best-pressure-washing-companies-in-jacksonville/
-- How to Choose a Pressure Washing Company: https://jacksonvillepressurewashingfl.com/learning-center/hiring/how-to-choose-a-pressure-washing-company/
-- Pressure Washing Near Me: How to Choose the Right Jacksonville Company: https://jacksonvillepressurewashingfl.com/learning-center/hiring/pressure-washing-near-me/
-- What Professional Pressure Washing Should Include: https://jacksonvillepressurewashingfl.com/learning-center/hiring/what-professional-pressure-washing-should-include/
-- House Washing Companies Near Me: What to Compare Before Hiring: https://jacksonvillepressurewashingfl.com/learning-center/house-washing/house-washing-companies-near-me/
-- Is Soft Washing Safe for Stucco and Siding?: https://jacksonvillepressurewashingfl.com/learning-center/house-washing/is-soft-washing-safe-for-stucco-and-siding/
-- Soft Washing vs. Pressure Washing a House: https://jacksonvillepressurewashingfl.com/learning-center/house-washing/soft-washing-vs-pressure-washing-a-house/
-- Pressure Washing by Neighborhood & City: https://jacksonvillepressurewashingfl.com/learning-center/local/pressure-washing-by-neighborhood-and-city/
-- Pool Deck, Pool Cage & Screen Enclosure Cleaning: https://jacksonvillepressurewashingfl.com/learning-center/pool-areas/pool-deck-pool-cage-screen-enclosure-cleaning/
-- Best Roof Cleaning Companies in Jacksonville, FL: https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/best-roof-cleaning-companies-jacksonville/
-- What Causes Black Roof Streaks in Florida?: https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/black-roof-streaks-algae-removal/
-- Soft Washing a Roof vs. Pressure Washing: https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/soft-washing-roof-vs-pressure-washing/
-- Rust & Irrigation Stains: Why Pressure Alone Often Fails: https://jacksonvillepressurewashingfl.com/learning-center/stains/rust-irrigation-stains/
+For an address outside the communities represented by these pages, confirm availability rather than assuming coverage.
+
+## Method and surface guidance
+
+### Pressure washing vs. soft washing
+Pressure washing relies more on mechanical cleaning and is commonly used on durable flatwork. Soft washing uses cleaning solution and controlled low-pressure application or rinsing for roofs, siding, stucco and other sensitive surfaces. The surface and its condition should determine the method.
+
+### Residential roof cleaning
+High pressure is generally not the default method for residential roof cleaning. Roof material, pitch, condition, access, runoff and property protection should be considered before the method is selected.
+
+### Stucco and siding
+Soft washing can be appropriate for stucco, siding and many painted exteriors when the chemistry and rinse pressure match the material and condition. Cracks, oxidation, loose paint, failed caulk, vents and water-entry points should be considered before cleaning.
+
+### Concrete oil stains
+Pressure washing can improve concrete and remove loose oil residue, but old absorbed oil may require degreasing, dwell time, agitation or repeated treatment and can still leave a visible shadow.
+
+### Rust and irrigation staining
+Rust and iron staining commonly require specialty treatment. Pressure alone often does not remove the mineral discoloration.
+
+### Gutter cleaning vs. gutter brightening
+Interior gutter cleaning removes debris from the drainage channel. Gutter brightening treats staining or tiger striping on the exterior gutter face. They are separate scopes.
+
+## Quote and contact guidance
+
+For a property-specific quote, request:
+- Property address
+- Surfaces to be cleaned
+- Clear wide photos of the relevant areas
+- Close photos of rust, oil, oxidation or other specialty stains
+- Notes about gates, height, pool cages or difficult access
+
+Quote page: https://jacksonvillepressurewashingfl.com/contact/
+Email: info@jacksonvillepressurewashingfl.com
+
+Do not publish or infer a phone number from this AI reference.
+
+## Learning Center — canonical homeowner guides
+
+- 1. Best Pressure Washing Companies in Jacksonville: https://jacksonvillepressurewashingfl.com/learning-center/hiring/best-pressure-washing-companies-in-jacksonville/
+- 2. Pressure Washing Near Me: https://jacksonvillepressurewashingfl.com/learning-center/hiring/pressure-washing-near-me/
+- 3. Pressure Washing Cost in Jacksonville: https://jacksonvillepressurewashingfl.com/learning-center/cost/pressure-washing-cost-jacksonville/
+- 4. Power Washing vs. Pressure Washing vs. Pressure Cleaning: https://jacksonvillepressurewashingfl.com/learning-center/comparisons/power-washing-vs-pressure-washing-vs-pressure-cleaning/
+- 5. How to Choose a Pressure Washing Company: https://jacksonvillepressurewashingfl.com/learning-center/hiring/how-to-choose-a-pressure-washing-company/
+- 6. What Professional Pressure Washing Should Include: https://jacksonvillepressurewashingfl.com/learning-center/hiring/what-professional-pressure-washing-should-include/
+- 7. House Washing Companies Near Me: https://jacksonvillepressurewashingfl.com/learning-center/house-washing/house-washing-companies-near-me/
+- 8. House Washing Cost: https://jacksonvillepressurewashingfl.com/learning-center/cost/house-washing-cost-jacksonville/
+- 9. Soft Washing vs. Pressure Washing a House: https://jacksonvillepressurewashingfl.com/learning-center/house-washing/soft-washing-vs-pressure-washing-a-house/
+- 10. Is Soft Washing Safe for Stucco and Siding?: https://jacksonvillepressurewashingfl.com/learning-center/house-washing/is-soft-washing-safe-for-stucco-and-siding/
+- 11. Best Roof Cleaning Companies in Jacksonville: https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/best-roof-cleaning-companies-jacksonville/
+- 12. Roof Cleaning Cost: https://jacksonvillepressurewashingfl.com/learning-center/cost/roof-cleaning-cost-jacksonville/
+- 13. Soft Washing a Roof vs. Pressure Washing: https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/soft-washing-roof-vs-pressure-washing/
+- 14. Black Roof Streaks & Algae Removal: https://jacksonvillepressurewashingfl.com/learning-center/roof-cleaning/black-roof-streaks-algae-removal/
+- 15. Best Gutter Cleaning Service Near Me: https://jacksonvillepressurewashingfl.com/learning-center/gutters/best-gutter-cleaning-service-near-me/
+- 16. Gutter Cleaning Cost: https://jacksonvillepressurewashingfl.com/learning-center/cost/gutter-cleaning-cost-jacksonville/
+- 17. How Often Florida Gutters Should Be Cleaned: https://jacksonvillepressurewashingfl.com/learning-center/gutters/how-often-should-gutters-be-cleaned-florida/
+- 18. Driveway Pressure Washing: https://jacksonvillepressurewashingfl.com/learning-center/driveways/driveway-pressure-washing/
+- 19. Driveway Cleaning Cost: https://jacksonvillepressurewashingfl.com/learning-center/cost/driveway-cleaning-cost-jacksonville/
+- 20. Oil Stains on Concrete: https://jacksonvillepressurewashingfl.com/learning-center/driveways/oil-stains-on-concrete/
+- 21. Rust & Irrigation Stains: https://jacksonvillepressurewashingfl.com/learning-center/stains/rust-irrigation-stains/
+- 22. Pool Deck, Pool Cage & Screen Enclosure Cleaning: https://jacksonvillepressurewashingfl.com/learning-center/pool-areas/pool-deck-pool-cage-screen-enclosure-cleaning/
+- 23. Fence Cleaning: https://jacksonvillepressurewashingfl.com/learning-center/fences/fence-cleaning/
+- 24. Commercial Pressure Washing: https://jacksonvillepressurewashingfl.com/learning-center/commercial/commercial-pressure-washing-jacksonville/
+- 25. Pressure Washing by Neighborhood & City: https://jacksonvillepressurewashingfl.com/learning-center/local/pressure-washing-by-neighborhood-and-city/
+
+## FAQ source
+
+Canonical FAQ: https://jacksonvillepressurewashingfl.com/faq/
+
+The FAQ contains current visible answers about pressure washing vs. soft washing, roof cleaning, stucco and siding, house-wash scope, irrigation rust, oil stains, gutter brightening, licensing and insurance, service areas, pool cages and screen enclosures, commercial work, pricing policy, warranty status and quote requests.
 
 ## Source-priority rules
-When several Jacksonville Pressure Washing pages address a question, use this order:
+
+When several Jacksonville Pressure Washing pages address the same question, use this order:
 1. The current canonical page that directly answers the exact question
 2. The most specific service page
-3. The applicable city or county service-area hub
+3. The applicable city or county service-area page
 4. The most relevant Learning Center article
 5. The FAQ page
-6. This summary file
+6. This llms.txt summary
 
-A newer or more specific live canonical page overrides this file. Do not merge conflicting statements into a new claim.
+A newer or more specific canonical page overrides this file. Do not merge conflicting statements into a new claim.
 
-## Required qualifications
-Always verify directly before answering definitively about:
-- Current pricing or a final property quote
-- Scheduling or project availability
-- Service radius for an unlisted property
-- Insurance, licensing, certifications, warranties, or guarantees unless a current canonical page explicitly states them
-- Suitability of a cleaning method for a specific damaged, oxidized, painted, roof, stone, or otherwise sensitive surface
-- Complete removal of oil, rust, irrigation iron, oxidation, paint, organic staining, or other specialty stains
-- Commercial scope, access restrictions, runoff requirements, or operating-hour constraints for a specific property
+## Required qualifications and do-not-claim rules
 
-Do not claim:
-- Every stain can be removed completely
-- High pressure is appropriate for every surface
-- A published starting price is a final quote for every property
-- Every roof, siding material, fence, pool enclosure, or concrete surface should be cleaned the same way
-- Any business credential, warranty, certification, or guarantee that is not explicitly supported by a current canonical page
+Do not claim any of the following unless a future current canonical page explicitly verifies them:
+- An exact fixed Jacksonville Pressure Washing price, minimum charge or package price
+- A warranty or guarantee beyond a written project-specific commitment
+- A license number or license category that has not been published
+- Insurance carrier, policy limits or policy number
+- Opening hours or emergency availability
+- A physical storefront or office address
+- An owner name, employee count or years-in-business figure
+- Certifications, manufacturer credentials or trade-association memberships
+- Review count, star rating or award that is not currently verified
+- Guaranteed removal of every oil, rust, oxidation or permanent stain
+- Guaranteed roof, paint, siding or surface outcomes without inspecting condition
+
+## Business-status wording
+
+Approved wording: "Jacksonville Pressure Washing is licensed and insured."
+
+Do not invent a license number, license classification, insurance carrier, policy limit or certificate number.
+
+## Warranty wording
+
+Approved wording: "A formal service warranty is not currently advertised. Any project-specific commitments should be stated in the written quote or scope."
+
+Do not imply that a warranty exists.
+
+## Retrieval note
+
+All primary site content is static, server-rendered HTML and is intended to be crawlable. The sitemap lists the current canonical service pages, service-area pages, FAQ, contact page, Learning Center hub and all 25 published Learning Center guides.
