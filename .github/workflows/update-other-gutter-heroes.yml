@@ -1,0 +1,39 @@
+name: Update Other Gutter Heroes
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-other-gutter-heroes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update gutter brightening and gutter cost hero images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          targets = [
+              Path('Gutters-Jacksonville-Fl/gutter-brightening/index.html'),
+              Path('Gutters-Jacksonville-Fl/gutter-cleaning-cost/index.html'),
+          ]
+          for p in targets:
+              s = p.read_text()
+              old = 'src="/nocatee-roof-washing.webp"'
+              new = 'src="/images/gutter-cleaning.webp"'
+              if old not in s:
+                  raise SystemExit(f'Expected hero image not found in {p}')
+              p.write_text(s.replace(old, new, 1))
+          PY
+      - name: Commit update and remove one-time workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Gutters-Jacksonville-Fl/gutter-brightening/index.html Gutters-Jacksonville-Fl/gutter-cleaning-cost/index.html
+          git rm .github/workflows/update-other-gutter-heroes.yml
+          git commit -m 'Use gutter cleaning image on remaining gutter pages'
+          git push
