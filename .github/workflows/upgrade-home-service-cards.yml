@@ -1,0 +1,54 @@
+name: Upgrade Homepage Service Cards
+
+on:
+  push:
+    paths:
+      - '.github/workflows/upgrade-home-service-cards.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Convert homepage service links to image cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text()
+          marker = '<span>Exterior cleaning services</span>'
+          marker_pos = s.index(marker)
+          start = s.index('<div class="service-grid">', marker_pos)
+          close_pattern = '</div></div></section>'
+          section_close = s.index(close_pattern, start)
+          grid_end = section_close + len('</div>')
+
+          new_grid = '''<div class="service-grid"><a class="service-card service-area-card" href="/Pressure-Washing-Jacksonville-fl/"><img class="service-area-card__image" src="/nocatee-roof-washing.webp" alt="Pressure washing and power washing in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Pressure Washing &amp; Power Washing</h3><p>Professional pressure cleaning for durable exterior surfaces, concrete, driveways, patios and commercial areas.</p></div></a><a class="service-card service-area-card" href="/House-Washing-Jacksonville-FL/"><img class="service-area-card__image" src="/images/jackosnville-houe-washing.jpeg" alt="House washing in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>House Washing</h3><p>Low-pressure exterior house washing for stucco, siding, soffits, fascia, trim and painted surfaces.</p></div></a><a class="service-card service-area-card" href="/House-Washing-Jacksonville-FL/roof-washing/"><img class="service-area-card__image" src="/images/roof washing.jpg" alt="Roof cleaning and roof washing in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Roof Cleaning &amp; Roof Washing</h3><p>Soft-wash roof cleaning for shingle, tile and compatible roofing systems affected by black streaks, algae and organic growth.</p></div></a><a class="service-card service-area-card" href="/House-Washing-Jacksonville-FL/soft-washing/"><img class="service-area-card__image" src="/nocatee-roof-washing.webp" alt="Soft washing in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Soft Washing</h3><p>Controlled chemical treatment and low-pressure rinsing for delicate exterior surfaces that should not be blasted with high pressure.</p></div></a><a class="service-card service-area-card" href="/Pressure-Washing-Jacksonville-fl/driveway-cleaning/"><img class="service-area-card__image" src="/images/jacksonville-pressure-washing-driveway.webp" alt="Driveway and concrete cleaning in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Driveway &amp; Concrete Cleaning</h3><p>Surface-cleaner washing for driveways, sidewalks, curbs and concrete flatwork with targeted treatment for organic buildup.</p></div></a><a class="service-card service-area-card" href="/Pressure-Washing-Jacksonville-fl/pool-deck-cleaning/"><img class="service-area-card__image" src="/images/pool-deck-cleaning.jpg" alt="Pool deck and screen enclosure cleaning in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Pool Deck &amp; Screen Enclosure Cleaning</h3><p>Pool deck, lanai and screen-enclosure cleaning for algae, pollen, dirt and Florida outdoor buildup.</p></div></a><a class="service-card service-area-card" href="/Gutters-Jacksonville-Fl/"><img class="service-area-card__image" src="/images/gutter-cleaning.webp" alt="Gutter cleaning in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Gutter Cleaning</h3><p>Interior gutter debris removal and downspout clearing to help keep roof drainage moving properly.</p></div></a><a class="service-card service-area-card" href="/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning/"><img class="service-area-card__image" src="/images/sidewalk-pressure-washing.jpg" alt="Patio and sidewalk cleaning in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Patio &amp; Sidewalk Cleaning</h3><p>Cleaning for patios, walkways, sidewalks, entries and other hardscape surfaces around the home.</p></div></a><a class="service-card service-area-card" href="/Gutters-Jacksonville-Fl/gutter-brightening/"><img class="service-area-card__image" src="/images/gutter-cleaning.webp" alt="Gutter brightening in Jacksonville" loading="lazy" decoding="async"><div class="service-area-card__body"><h3>Gutter Brightening</h3><p>Exterior gutter-face cleaning for bonded grime, tiger striping and oxidation-related discoloration when surface condition allows.</p></div></a></div>'''
+
+          s = s[:start] + new_grid + s[grid_end:]
+          p.write_text(s)
+          PY
+      - name: Validate homepage cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s = Path('index.html').read_text()
+          assert s.count('class="service-card service-area-card"') >= 12
+          assert '/images/jackosnville-houe-washing.jpeg' in s
+          assert '/images/pool-deck-cleaning.jpg' in s
+          assert '/images/sidewalk-pressure-washing.jpg' in s
+          main = s[s.index('<span>Exterior cleaning services</span>'):s.index('<span>Northeast Florida service areas</span>')]
+          assert main.index('Patio &amp; Sidewalk Cleaning') < main.index('Gutter Brightening')
+          PY
+      - name: Commit update and remove one-time workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git rm .github/workflows/upgrade-home-service-cards.yml
+          git commit -m 'Add hero images to homepage service cards'
+          git push
