@@ -18,3 +18,10 @@
   .home-menubar{min-height:58px!important;padding-left:34px!important;padding-right:34px!important}
   .home-menubar>a,.home-menubar .drop-toggle{padding:18px 20px!important;font-size:11.5px!important;letter-spacing:.9px!important}
 }
+
+/* Fence page related-service card images */
+.fc-related a::before{content:"";display:block;height:190px;margin:-24px -24px 20px;background-size:cover;background-position:center;border-radius:21px 21px 0 0}
+.fc-related a:nth-child(1)::before{background-image:url('/images/jacksonville-pressure-washing-driveway.webp')}
+.fc-related a:nth-child(2)::before{background-image:url('/images/sidewalk-pressure-washing.jpg')}
+.fc-related a:nth-child(3)::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
+@media(max-width:650px){.fc-related a::before{height:180px}}
