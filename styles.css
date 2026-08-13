@@ -39,3 +39,33 @@
 .sw-related a:nth-child(2)::before{background-image:url('/images/pool-deck-cleaning.jpg')}
 .sw-related a:nth-child(3)::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
 @media(max-width:650px){.sw-related a::before{height:180px}}
+
+/* House dropdown related-service card images */
+.hw-related a::before,.rw-related a::before,.pc-related a::before,.se-related a::before{content:"";display:block;height:190px;margin:-24px -24px 20px;background-size:cover;background-position:center;border-radius:21px 21px 0 0}
+.hw-related a:nth-child(1)::before{background-image:url('/images/roof washing.jpg')}
+.hw-related a:nth-child(2)::before{background-image:url('/images/gutter-cleaning.webp')}
+.hw-related a:nth-child(3)::before{background-image:url('/images/jacksonville-pressure-washing-driveway.webp')}
+.rw-related a:nth-child(1)::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
+.rw-related a:nth-child(2)::before{background-image:url('/images/gutter-cleaning.webp')}
+.rw-related a:nth-child(3)::before{background-image:url('/nocatee-roof-washing.webp')}
+.pc-related a:nth-child(1)::before{background-image:url('/images/screen-enclosure.jpeg')}
+.pc-related a:nth-child(2)::before{background-image:url('/images/pool-deck-cleaning.jpg')}
+.pc-related a:nth-child(3)::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
+.pc-related a:nth-child(4)::before{background-image:url('/images/gutter-cleaning.webp')}
+.pc-related a:nth-child(5)::before{background-image:url('/images/sidewalk-pressure-washing.jpg')}
+.pc-related a:nth-child(6)::before{background-image:url('/nocatee-roof-washing.webp')}
+.se-related a:nth-child(1)::before{background-image:url('/images/pool-cage-enclosure-cleaning.jpeg')}
+.se-related a:nth-child(2)::before{background-image:url('/images/pool-deck-cleaning.jpg')}
+.se-related a:nth-child(3)::before{background-image:url('/images/sidewalk-pressure-washing.jpg')}
+.se-related a:nth-child(4)::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
+.se-related a:nth-child(5)::before{background-image:url('/images/fence-cleaning-jacksonville.jpg')}
+.se-related a:nth-child(6)::before{background-image:url('/nocatee-roof-washing.webp')}
+.soft-related{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.soft-related a{display:block;overflow:hidden;border:1px solid #dce5ea;border-radius:22px;background:#fff;text-decoration:none;color:inherit;box-shadow:0 14px 34px rgba(11,45,74,.06);transition:transform .2s ease,box-shadow .2s ease}
+.soft-related a:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(11,45,74,.09)}
+.soft-related img{display:block;width:100%;height:190px;object-fit:cover}
+.soft-related .soft-card-copy{padding:24px}
+.soft-related h3{margin:0 0 6px;color:#0b2d4a;font-size:20px}
+.soft-related p{margin:0;color:#536475;font-size:14px;line-height:1.5}
+@media(max-width:980px){.soft-related{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.hw-related a::before,.rw-related a::before,.pc-related a::before,.se-related a::before{height:180px}.soft-related{grid-template-columns:1fr}.soft-related img{height:180px}}
