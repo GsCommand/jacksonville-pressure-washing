@@ -1,0 +1,15 @@
+/* Bottom related-link image cards for gutter and service-area pages */
+.gc-links,.gb-links,.gcp-links,.area-links{grid-template-columns:1fr!important}
+.gc-links>div:last-child nav,.gb-links>div:last-child nav,.gcp-links>div:last-child nav,.area-links>div:last-child nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important}
+.gc-links>div:last-child nav a,.gb-links>div:last-child nav a,.gcp-links>div:last-child nav a,.area-links>div:last-child nav a{display:block;overflow:hidden;padding:0 18px 18px!important;border:1px solid #dce5ea;border-radius:20px;background:#fff;color:#0b2d4a!important;text-decoration:none;box-shadow:0 12px 28px rgba(11,45,74,.06);transition:transform .2s ease,box-shadow .2s ease}
+.gc-links>div:last-child nav a:hover,.gb-links>div:last-child nav a:hover,.gcp-links>div:last-child nav a:hover,.area-links>div:last-child nav a:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(11,45,74,.11)}
+.gc-links>div:last-child nav a::before,.gb-links>div:last-child nav a::before,.gcp-links>div:last-child nav a::before,.area-links>div:last-child nav a::before{content:"";display:block;height:165px;margin:0 -18px 16px;background-size:cover;background-position:center}
+.gc-links a[href="/Gutters-Jacksonville-Fl/gutter-brightening/"]::before,.gb-links a[href="/Gutters-Jacksonville-Fl/"]::before,.gcp-links a[href="/Gutters-Jacksonville-Fl/"]::before,.gcp-links a[href="/Gutters-Jacksonville-Fl/gutter-brightening/"]::before{background-image:url('/images/gutter-cleaning.webp')}
+.gc-links a[href="/House-Washing-Jacksonville-FL/"]::before,.gb-links a[href="/House-Washing-Jacksonville-FL/"]::before,.gcp-links a[href="/House-Washing-Jacksonville-FL/"]::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
+.gc-links a[href="/House-Washing-Jacksonville-FL/roof-washing/"]::before{background-image:url('/images/roof washing.jpg')}
+.gb-links a[href="/House-Washing-Jacksonville-FL/soft-washing/"]::before{background-image:url('/nocatee-roof-washing.webp')}
+.area-links a[href="/service-areas/jacksonville/"]::before{background-image:url('/images/jacksonville-service-area.webp')}
+.area-links a[href="/service-areas/st-johns-county/"]::before{background-image:url('/images/st-johns-county-service-area.webp')}
+.area-links a[href="/service-areas/clay-county/"]::before{background-image:url('/images/clay-county-service-area.png')}
+.area-links a[href="/service-areas/nassau-county/"]::before{background-image:url('/nocatee-roof-washing.webp')}
+@media(max-width:650px){.gc-links>div:last-child nav,.gb-links>div:last-child nav,.gcp-links>div:last-child nav,.area-links>div:last-child nav{grid-template-columns:1fr!important}.gc-links>div:last-child nav a::before,.gb-links>div:last-child nav a::before,.gcp-links>div:last-child nav a::before,.area-links>div:last-child nav a::before{height:180px}}
