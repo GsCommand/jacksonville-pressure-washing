@@ -32,3 +32,10 @@
 .pd-related a:nth-child(2)::before{background-image:url('/images/screen-enclosure.jpeg')}
 .pd-related a:nth-child(3)::before{background-image:url('/images/sidewalk-pressure-washing.jpg')}
 @media(max-width:650px){.pd-related a::before{height:180px}}
+
+/* Sidewalk page related-service card images */
+.sw-related a::before{content:"";display:block;height:190px;margin:-24px -24px 20px;background-size:cover;background-position:center;border-radius:21px 21px 0 0}
+.sw-related a:nth-child(1)::before{background-image:url('/images/jacksonville-pressure-washing-driveway.webp')}
+.sw-related a:nth-child(2)::before{background-image:url('/images/pool-deck-cleaning.jpg')}
+.sw-related a:nth-child(3)::before{background-image:url('/images/jackosnville-houe-washing.jpeg')}
+@media(max-width:650px){.sw-related a::before{height:180px}}
