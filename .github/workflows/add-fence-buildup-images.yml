@@ -1,0 +1,24 @@
+name: Add fence buildup images
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply image placements
+        run: |
+          echo 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpzZXJ2aWNlID0gUGF0aCgnUHJlc3N1cmUtV2FzaGluZy1KYWNrc29udmlsbGUtZmwvZmVuY2UtY2xlYW5pbmcvaW5kZXguaHRtbCcpCnMgPSBzZXJ2aWNlLnJlYWRfdGV4dCgpCm9sZDEgPSAnPGltZyBzcmM9Ii9pbWFnZXMvamFja29zbnZpbGxlLWhvdWUtd2FzaGluZy5qcGVnIiBhbHQ9IkxvdyBwcmVzc3VyZSBleHRlcmlvciBjbGVhbmluZyBtZXRob2QgaW4gSmFja3NvbnZpbGxlIiBsb2FkaW5nPSJsYXp5IiBkZWNvZGluZz0iYXN5bmMiPicKbmV3MSA9ICc8aW1nIHNyYz0iL2ltYWdlcy9kaXJ0eS1mZW5jZS5qcGVnIiBhbHQ9IkdyZWVuIG9yZ2FuaWMgYnVpbGR1cCBvbiBhIHZpbnlsIHByaXZhY3kgZmVuY2UgaW4gSmFja3NvbnZpbGxlIEZsb3JpZGEiIGxvYWRpbmc9ImxhenkiIGRlY29kaW5nPSJhc3luYyI+JwppZiBvbGQxIG5vdCBpbiBzOgogICAgcmFpc2UgU3lzdGVtRXhpdCgnRmVuY2UgdmlueWwgaW1hZ2UgdGFyZ2V0IG5vdCBmb3VuZCcpCnMgPSBzLnJlcGxhY2Uob2xkMSwgbmV3MSwgMSkKb2xkMiA9ICc8aW1nIHNyYz0iL2ltYWdlcy9qYWNrc29udmlsbGUtc2VydmljZS1hcmVhLndlYnAiIGFsdD0iSmFja3NvbnZpbGxlIHJlc2lkZW50aWFsIGZlbmNlIGFuZCBleHRlcmlvciBjbGVhbmluZyBzZXJ2aWNlIGFyZWEiIGxvYWRpbmc9ImxhenkiIGRlY29kaW5nPSJhc3luYyI+JwpuZXcyID0gJzxpbWcgc3JjPSIvaW1hZ2VzL29yZ2FuaWMtZmVuY2UlMjBidWlsZC11cC5qcGVnIiBhbHQ9Ik9yZ2FuaWMgYnVpbGR1cCBvbiBleHRlcmlvciBmZW5jaW5nIGluIE5vcnRoZWFzdCBGbG9yaWRhIiBsb2FkaW5nPSJsYXp5IiBkZWNvZGluZz0iYXN5bmMiPicKaWYgb2xkMiBub3QgaW4gczoKICAgIHJhaXNlIFN5c3RlbUV4aXQoJ0ZlbmNlIEZsb3JpZGEgYnVpbGR1cCBpbWFnZSB0YXJnZXQgbm90IGZvdW5kJykKcyA9IHMucmVwbGFjZShvbGQyLCBuZXcyLCAxKQpzZXJ2aWNlLndyaXRlX3RleHQocykKCmd1aWRlID0gUGF0aCgnbGVhcm5pbmctY2VudGVyL2ZlbmNlcy9mZW5jZS1jbGVhbmluZy9pbmRleC5odG1sJykKZyA9IGd1aWRlLnJlYWRfdGV4dCgpCmcoKQ==' | base64 -d >/tmp/update.py
+          python /tmp/update.py
+      - name: Commit updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Pressure-Washing-Jacksonville-fl/fence-cleaning/index.html learning-center/fences/fence-cleaning/index.html .github/workflows/add-fence-buildup-images.yml
+          git commit -m "Use fence buildup images in relevant content"
+          git push
