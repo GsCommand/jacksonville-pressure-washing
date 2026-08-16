@@ -1,6 +1,16 @@
 {
   "redirects": [
     {
+      "source": "/Gutters-Jacksonville-Fl",
+      "destination": "/Gutter-Cleaning-Jacksonville-Fl/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutters-Jacksonville-Fl/",
+      "destination": "/Gutter-Cleaning-Jacksonville-Fl/",
+      "permanent": true
+    },
+    {
       "source": "/:path*.html",
       "destination": "/:path*",
       "permanent": true
@@ -47,7 +57,7 @@
     },
     {
       "source": "/services/gutter-cleaning/",
-      "destination": "/Gutters-Jacksonville-Fl/",
+      "destination": "/Gutter-Cleaning-Jacksonville-Fl/",
       "permanent": true
     },
     {
