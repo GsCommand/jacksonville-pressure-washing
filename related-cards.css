@@ -12,4 +12,6 @@
 .area-links a[href="/service-areas/st-johns-county/"]::before{background-image:url('/images/st-johns-county-service-area.webp')}
 .area-links a[href="/service-areas/clay-county/"]::before{background-image:url('/images/clay-county-service-area.png')}
 .area-links a[href="/service-areas/nassau-county/"]::before{background-image:url('/nocatee-roof-washing.webp')}
+/* Force the Driveway page's visible Gutter Cleaning card to the new dirty-gutter asset. */
+.dw-related a[href="/Gutter-Cleaning-Jacksonville-Fl/"] img{content:url('/images/dirty-gutter.jpeg?v=20260815')!important}
 @media(max-width:650px){.gc-links>div:last-child nav,.gb-links>div:last-child nav,.gcp-links>div:last-child nav,.area-links>div:last-child nav{grid-template-columns:1fr!important}.gc-links>div:last-child nav a::before,.gb-links>div:last-child nav a::before,.gcp-links>div:last-child nav a::before,.area-links>div:last-child nav a::before{height:180px}}
