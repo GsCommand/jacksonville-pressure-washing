@@ -1,0 +1,62 @@
+name: Service architecture pass 1
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/architecture-pass-1.yml']
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move service files and normalize internal URLs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          W=Path('.github/workflows/architecture-pass-1.yml')
+          def mv(a,b):
+            a,b=Path(a),Path(b); b.parent.mkdir(parents=True,exist_ok=True)
+            if not a.exists(): raise SystemExit(f'missing {a}')
+            if b.exists(): raise SystemExit(f'exists {b}')
+            shutil.move(str(a),str(b))
+          pc=['commercial-pressure-washing','driveway-cleaning','fence-cleaning','pool-deck-cleaning','sidewalk-cleaning']
+          for x in pc: mv(f'Pressure-Washing-Jacksonville-fl/{x}/index.html',f'pressure-washing-jacksonville-fl/{x}/index.html')
+          p=Path('Pressure-Washing-Jacksonville-fl/index.html')
+          if p.exists(): p.unlink()
+          mv('House-Washing-Jacksonville-FL/index.html','house-washing-jacksonville-fl/index.html')
+          for x in ['soft-washing','pool-cage-cleaning','screen-enclosure-cleaning']: mv(f'House-Washing-Jacksonville-FL/{x}/index.html',f'house-washing-jacksonville-fl/{x}/index.html')
+          mv('House-Washing-Jacksonville-FL/roof-washing/index.html','roof-cleaning-jacksonville-fl/index.html')
+          mv('Gutter-Cleaning-Jacksonville-Fl/index.html','gutter-cleaning-jacksonville-fl/index.html')
+          mv('Gutters-Jacksonville-Fl/gutter-brightening/index.html','gutter-cleaning-jacksonville-fl/gutter-brightening/index.html')
+          mv('Gutters-Jacksonville-Fl/gutter-cleaning-cost/index.html','gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/index.html')
+          pairs=[]
+          for x in pc:
+            pairs += [(f'/Pressure-Washing-Jacksonville-fl/{x}/',f'/pressure-washing-jacksonville-fl/{x}/'),(f'https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/{x}/',f'https://jacksonvillepressurewashingfl.com/pressure-washing-jacksonville-fl/{x}/')]
+          pairs += [
+            ('/House-Washing-Jacksonville-FL/roof-washing/','/roof-cleaning-jacksonville-fl/'),('https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/roof-washing/','https://jacksonvillepressurewashingfl.com/roof-cleaning-jacksonville-fl/'),
+            ('/House-Washing-Jacksonville-FL/soft-washing/','/house-washing-jacksonville-fl/soft-washing/'),('/House-Washing-Jacksonville-FL/pool-cage-cleaning/','/house-washing-jacksonville-fl/pool-cage-cleaning/'),('/House-Washing-Jacksonville-FL/screen-enclosure-cleaning/','/house-washing-jacksonville-fl/screen-enclosure-cleaning/'),
+            ('https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/soft-washing/','https://jacksonvillepressurewashingfl.com/house-washing-jacksonville-fl/soft-washing/'),('https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/pool-cage-cleaning/','https://jacksonvillepressurewashingfl.com/house-washing-jacksonville-fl/pool-cage-cleaning/'),('https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/screen-enclosure-cleaning/','https://jacksonvillepressurewashingfl.com/house-washing-jacksonville-fl/screen-enclosure-cleaning/'),
+            ('/House-Washing-Jacksonville-FL/','/house-washing-jacksonville-fl/'),('https://jacksonvillepressurewashingfl.com/House-Washing-Jacksonville-FL/','https://jacksonvillepressurewashingfl.com/house-washing-jacksonville-fl/'),
+            ('/Gutters-Jacksonville-Fl/gutter-brightening/','/gutter-cleaning-jacksonville-fl/gutter-brightening/'),('/Gutters-Jacksonville-Fl/gutter-cleaning-cost/','/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/'),
+            ('https://jacksonvillepressurewashingfl.com/Gutters-Jacksonville-Fl/gutter-brightening/','https://jacksonvillepressurewashingfl.com/gutter-cleaning-jacksonville-fl/gutter-brightening/'),('https://jacksonvillepressurewashingfl.com/Gutters-Jacksonville-Fl/gutter-cleaning-cost/','https://jacksonvillepressurewashingfl.com/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/'),
+            ('/Gutter-Cleaning-Jacksonville-Fl/','/gutter-cleaning-jacksonville-fl/'),('https://jacksonvillepressurewashingfl.com/Gutter-Cleaning-Jacksonville-Fl/','https://jacksonvillepressurewashingfl.com/gutter-cleaning-jacksonville-fl/'),
+            ('/Pressure-Washing-Jacksonville-fl/','/service-areas/jacksonville/'),('https://jacksonvillepressurewashingfl.com/Pressure-Washing-Jacksonville-fl/','https://jacksonvillepressurewashingfl.com/service-areas/jacksonville/')]
+          for f in Path('.').rglob('*'):
+            if not f.is_file() or '.git' in f.parts or f==W or f.name in ('vercel.json','sitemap.xml'): continue
+            if f.suffix.lower() not in ('.html','.css','.txt','.md','.js'): continue
+            try: s=f.read_text()
+            except UnicodeDecodeError: continue
+            o=s
+            for a,b in pairs: s=s.replace(a,b)
+            if s!=o: f.write_text(s)
+          W.unlink()
+          PY
+      - name: Commit
+        run: |
+          git config user.name "Greg Soucy"
+          git config user.email "GREG@COMMANDLAYER.ORG"
+          git add -A
+          git commit -m "Move service silos to canonical lowercase URLs"
+          git push
