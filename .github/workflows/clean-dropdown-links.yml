@@ -1,0 +1,49 @@
+name: Clean dropdown links
+on:
+  push:
+    paths:
+      - '.github/workflows/clean-dropdown-links.yml'
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove selected links from dropdown navigation only
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          removals = [
+              re.compile(r'<a\s+href="/service-areas/jacksonville/">Pressure Washing\s*&amp;\s*Power Washing</a>'),
+              re.compile(r'<a\s+href="/service-areas/orange-park/">Orange Park</a>'),
+              re.compile(r'<a\s+href="/service-areas/fernandina-beach/">Fernandina Beach</a>'),
+          ]
+          nav_re = re.compile(r'(<nav\s+class="home-menubar"[^>]*>)(.*?)(</nav>)', re.S)
+          changed = []
+
+          for path in Path('.').rglob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              def clean_nav(match):
+                  body = match.group(2)
+                  for pattern in removals:
+                      body = pattern.sub('', body)
+                  return match.group(1) + body + match.group(3)
+              new = nav_re.sub(clean_nav, text)
+              if new != text:
+                  path.write_text(new, encoding='utf-8')
+                  changed.append(str(path))
+
+          print(f'Updated {len(changed)} HTML files')
+          for path in changed:
+              print(path)
+      - name: Commit cleanup and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/clean-dropdown-links.yml
+          git add -A
+          git commit -m "Simplify navigation dropdowns" || exit 0
+          git push
