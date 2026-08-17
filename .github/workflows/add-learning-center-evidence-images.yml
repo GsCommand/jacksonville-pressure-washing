@@ -1,0 +1,44 @@
+name: Add Learning Center evidence images
+on:
+  push:
+    paths: ['.github/workflows/add-learning-center-evidence-images.yml']
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: python
+        run: |
+          from pathlib import Path
+          import re,json
+          T={
+          'learning-center/comparisons/does-pressure-washing-remove-mold-mildew-algae/index.html':('/images/jacksonville-pressure-washing-driveway.webp','Concrete driveway cleaning in Jacksonville'),
+          'learning-center/local/pressure-washing-by-neighborhood-and-city/index.html':('/images/jacksonville-service-area.webp','Jacksonville exterior cleaning service area'),
+          'learning-center/comparisons/power-washing-vs-pressure-washing-vs-pressure-cleaning/index.html':('/images/jacksonville-pressure-washing-driveway.webp','Pressure washing a concrete driveway in Jacksonville'),
+          'learning-center/fences/wood-vs-vinyl-fence-cleaning/index.html':('/images/fence-cleaning-jacksonville.jpg','Fence cleaning in Jacksonville'),
+          'learning-center/gutters/clogged-downspout-signs/index.html':('/images/dirty-gutter.jpeg','Gutter debris on a Jacksonville home'),
+          'learning-center/gutters/gutter-cleaning-vs-gutter-brightening/index.html':('/images/dirty-gutter.jpeg','Exterior gutter condition in Jacksonville'),
+          'learning-center/gutters/gutter-tiger-stripes/index.html':('/images/dirty-gutter.jpeg','Jacksonville gutter exterior cleaning evaluation'),
+          'learning-center/hiring/what-professional-pressure-washing-should-include/index.html':('/images/jacksonville-pressure-washing-driveway.webp','Professional concrete pressure washing in Jacksonville'),
+          'learning-center/house-washing/is-soft-washing-safe-for-stucco-and-siding/index.html':('/images/jackosnville-houe-washing.jpeg','House washing on a Jacksonville home')}
+          css='<style id="lc-field-image-style">.article-field-image{margin:24px 0 30px}.article-field-image img{display:block;width:100%;height:auto;border-radius:12px}</style>'
+          for f,(src,alt) in T.items():
+              p=Path(f); s=p.read_text()
+              if not Path(src.lstrip('/')).exists(): raise SystemExit('missing '+src)
+              if 'article-field-image' in s: raise SystemExit('already '+f)
+              s=s.replace('</head>',css+'</head>',1)
+              m=re.search(r'(<p><strong>Jacksonville context:</strong>.*?</p>)',s,re.S)
+              if not m: raise SystemExit('no context '+f)
+              fig=f'<figure class="article-field-image"><img src="{src}" alt="{alt}" loading="lazy" decoding="async"></figure>'
+              s=s[:m.end()]+fig+s[m.end():]
+              p.write_text(s)
+          print('PASS: 9 evidence images added')
+      - run: |
+          rm .github/workflows/add-learning-center-evidence-images.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add learning-center .github/workflows/add-learning-center-evidence-images.yml
+          git commit -m 'Add relevant evidence images to nine Learning Center articles'
+          git push
