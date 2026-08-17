@@ -1,0 +1,48 @@
+name: Promote Roof Cleaning nav
+on:
+  push:
+    paths:
+      - '.github/workflows/promote-roof-nav.yml'
+permissions:
+  contents: write
+jobs:
+  update-nav:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Promote Roof Cleaning to top-level navigation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          variants = [
+              '<a href="/roof-cleaning-jacksonville-fl/">Roof Washing</a>',
+              '<a href="/roof-cleaning-jacksonville-fl/">Roof Cleaning</a>',
+              '<a href="/House-Washing-Jacksonville-FL/roof-washing/">Roof Washing</a>',
+              '<a href="/house-washing-jacksonville-fl/roof-washing/">Roof Washing</a>',
+          ]
+          marker = '</div></div><div class="drop"><button class="drop-toggle">Gutters</button>'
+          replacement = '</div></div><a href="/roof-cleaning-jacksonville-fl/">Roof Cleaning</a><div class="drop"><button class="drop-toggle">Gutters</button>'
+          changed = 0
+          for path in Path('.').rglob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              original = text
+              for link in variants:
+                  text = text.replace(link, '')
+              text = text.replace(marker, replacement)
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed += 1
+          print(f'Updated navigation in {changed} HTML files')
+          PY
+      - name: Commit navigation change and remove workflow
+        run: |
+          rm -f .github/workflows/promote-roof-nav.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Promote Roof Cleaning to top-level navigation"
+          git push
