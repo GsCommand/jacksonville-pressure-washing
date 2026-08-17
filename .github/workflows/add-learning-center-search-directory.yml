@@ -27,7 +27,7 @@ jobs:
               ('Oil Stains on Concrete','/learning-center/driveways/oil-stains-on-concrete/'),
               ('Does Pressure Washing Remove Mold, Mildew and Algae From Concrete?','/learning-center/comparisons/does-pressure-washing-remove-mold-mildew-algae/'),
               ('Can Pressure Washing Damage Concrete? Etching, Lines and Surface-Cleaner Marks Explained','/learning-center/comparisons/can-pressure-washing-damage-concrete/'),
-              ('How to Remove Tire Marks From a Concrete Driveway','/learning-center/driveways/remove-tire-marks-concrete-driveway/'),
+              ('How to Remove Tire Marks From a Concrete Driveway','/learning-center/driveways/how-to-remove-tire-marks-concrete-driveway/'),
             ]),
             ('House Washing & Soft Washing', [
               ('House Washing Companies Near Me','/learning-center/house-washing/house-washing-companies-near-me/'),
@@ -92,7 +92,6 @@ jobs:
           if len(flat) != 53 or len({u for _,u,_ in flat}) != 53:
               raise SystemExit(f'Category map must contain 53 unique guides; got {len(flat)} / {len({u for _,u,_ in flat})}')
 
-          site = 'https://jacksonvillepressurewashingfl.com'
           listed = set(re.findall(r'"url":"https://jacksonvillepressurewashingfl\.com(/learning-center/[^"#]+/)"', s))
           mapped = {u for _,u,_ in flat}
           if listed != mapped:
