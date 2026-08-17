@@ -42,8 +42,6 @@ jobs:
                   p.write_text(s,encoding='utf-8')
                   changed.append(key)
 
-          # The main service-area hub visibly lists only four top-level areas,
-          # so keep its ItemList schema aligned with that visible content.
           hub=Path('service-areas/index.html')
           s=hub.read_text(encoding='utf-8')
           old=s
@@ -67,13 +65,11 @@ jobs:
               hub.write_text(s,encoding='utf-8')
               if 'service-areas/index.html' not in changed: changed.append('service-areas/index.html')
 
-          # QA: city pages remain live and sitemap retains them.
           for city in ('service-areas/orange-park/index.html','service-areas/fernandina-beach/index.html'):
               assert Path(city).exists(), city
           sm=Path('sitemap.xml').read_text(encoding='utf-8')
           assert orange_abs in sm and fern_abs in sm, 'city sitemap entries missing'
 
-          # QA: only the intended county page may contain each internal city anchor.
           found={orange:[],fern:[]}
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts or '.github' in p.parts:
@@ -81,15 +77,15 @@ jobs:
               key=str(p).replace('\\','/')
               s=p.read_text(encoding='utf-8')
               for href in (orange,fern):
-                  if re.search(r'href=["\'](?:https://jacksonvillepressurewashingfl\.com)?'+re.escape(href)+r'["\']',s,re.I):
+                  if re.search(r'<a\b[^>]*href=["\'](?:https://jacksonvillepressurewashingfl\.com)?'+re.escape(href)+r'["\']',s,re.I):
                       found[href].append(key)
           assert found[orange]==['service-areas/clay-county/index.html'], found[orange]
           assert found[fern]==['service-areas/nassau-county/index.html'], found[fern]
 
           hs=hub.read_text(encoding='utf-8')
           assert '"numberOfItems":4' in hs, 'hub ItemList not reduced to 4'
-          assert orange_abs not in re.search(r'<script\s+type="application/ld\+json"[^>]*>(.*?)</script>',hs,re.S|re.I).group(1)
-          assert fern_abs not in re.search(r'<script\s+type="application/ld\+json"[^>]*>(.*?)</script>',hs,re.S|re.I).group(1)
+          schema=re.search(r'<script\s+type="application/ld\+json"[^>]*>(.*?)</script>',hs,re.S|re.I).group(1)
+          assert orange_abs not in schema and fern_abs not in schema
           print('PASS: Orange Park linked only from Clay County; Fernandina Beach linked only from Nassau County; hub schema aligned to four top-level areas')
           print('changed files:',len(changed))
       - name: Commit cleanup and self-delete workflow
