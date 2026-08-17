@@ -1,13 +1,193 @@
 {
   "redirects": [
     {
+      "source": "/Pressure-Washing-Jacksonville-fl",
+      "destination": "/service-areas/jacksonville/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/",
+      "destination": "/service-areas/jacksonville/",
+      "permanent": true
+    },
+    {
+      "source": "/pressure-washing-jacksonville-fl",
+      "destination": "/service-areas/jacksonville/",
+      "permanent": true
+    },
+    {
+      "source": "/pressure-washing-jacksonville-fl/",
+      "destination": "/service-areas/jacksonville/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/commercial-pressure-washing",
+      "destination": "/pressure-washing-jacksonville-fl/commercial-pressure-washing/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/commercial-pressure-washing/",
+      "destination": "/pressure-washing-jacksonville-fl/commercial-pressure-washing/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/driveway-cleaning",
+      "destination": "/pressure-washing-jacksonville-fl/driveway-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/driveway-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/driveway-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/fence-cleaning",
+      "destination": "/pressure-washing-jacksonville-fl/fence-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/fence-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/fence-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/pool-deck-cleaning",
+      "destination": "/pressure-washing-jacksonville-fl/pool-deck-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/pool-deck-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/pool-deck-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning",
+      "destination": "/pressure-washing-jacksonville-fl/sidewalk-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/sidewalk-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL",
+      "destination": "/house-washing-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/",
+      "destination": "/house-washing-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/soft-washing",
+      "destination": "/house-washing-jacksonville-fl/soft-washing/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/soft-washing/",
+      "destination": "/house-washing-jacksonville-fl/soft-washing/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/pool-cage-cleaning",
+      "destination": "/house-washing-jacksonville-fl/pool-cage-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/pool-cage-cleaning/",
+      "destination": "/house-washing-jacksonville-fl/pool-cage-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/screen-enclosure-cleaning",
+      "destination": "/house-washing-jacksonville-fl/screen-enclosure-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/screen-enclosure-cleaning/",
+      "destination": "/house-washing-jacksonville-fl/screen-enclosure-cleaning/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/roof-washing",
+      "destination": "/roof-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/House-Washing-Jacksonville-FL/roof-washing/",
+      "destination": "/roof-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/house-washing-jacksonville-fl/roof-washing",
+      "destination": "/roof-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/house-washing-jacksonville-fl/roof-washing/",
+      "destination": "/roof-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutter-Cleaning-Jacksonville-Fl",
+      "destination": "/gutter-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutter-Cleaning-Jacksonville-Fl/",
+      "destination": "/gutter-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
       "source": "/Gutters-Jacksonville-Fl",
-      "destination": "/Gutter-Cleaning-Jacksonville-Fl/",
+      "destination": "/gutter-cleaning-jacksonville-fl/",
       "permanent": true
     },
     {
       "source": "/Gutters-Jacksonville-Fl/",
-      "destination": "/Gutter-Cleaning-Jacksonville-Fl/",
+      "destination": "/gutter-cleaning-jacksonville-fl/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutters-Jacksonville-Fl/gutter-brightening",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-brightening/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutters-Jacksonville-Fl/gutter-brightening/",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-brightening/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutters-Jacksonville-Fl/gutter-cleaning-cost",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutters-Jacksonville-Fl/gutter-cleaning-cost/",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutter-Cleaning-Jacksonville-Fl/gutter-brightening",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-brightening/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutter-Cleaning-Jacksonville-Fl/gutter-brightening/",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-brightening/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutter-Cleaning-Jacksonville-Fl/gutter-cleaning-cost",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/",
+      "permanent": true
+    },
+    {
+      "source": "/Gutter-Cleaning-Jacksonville-Fl/gutter-cleaning-cost/",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/",
       "permanent": true
     },
     {
@@ -17,67 +197,67 @@
     },
     {
       "source": "/services",
-      "destination": "/Pressure-Washing-Jacksonville-fl/",
+      "destination": "/service-areas/jacksonville/",
       "permanent": true
     },
     {
       "source": "/services/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/",
+      "destination": "/service-areas/jacksonville/",
       "permanent": true
     },
     {
       "source": "/services/pressure-washing/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/",
+      "destination": "/service-areas/jacksonville/",
       "permanent": true
     },
     {
       "source": "/services/house-washing/",
-      "destination": "/House-Washing-Jacksonville-FL/",
+      "destination": "/house-washing-jacksonville-fl/",
       "permanent": true
     },
     {
       "source": "/services/roof-cleaning/",
-      "destination": "/House-Washing-Jacksonville-FL/roof-washing/",
+      "destination": "/roof-cleaning-jacksonville-fl/",
       "permanent": true
     },
     {
       "source": "/services/soft-washing/",
-      "destination": "/House-Washing-Jacksonville-FL/soft-washing/",
+      "destination": "/house-washing-jacksonville-fl/soft-washing/",
       "permanent": true
     },
     {
       "source": "/services/driveway-concrete-cleaning/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/driveway-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/driveway-cleaning/",
       "permanent": true
     },
     {
       "source": "/services/pool-deck-screen-enclosure-cleaning/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/pool-deck-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/pool-deck-cleaning/",
       "permanent": true
     },
     {
       "source": "/services/gutter-cleaning/",
-      "destination": "/Gutter-Cleaning-Jacksonville-Fl/",
+      "destination": "/gutter-cleaning-jacksonville-fl/",
       "permanent": true
     },
     {
       "source": "/services/gutter-brightening/",
-      "destination": "/Gutters-Jacksonville-Fl/gutter-brightening/",
+      "destination": "/gutter-cleaning-jacksonville-fl/gutter-brightening/",
       "permanent": true
     },
     {
       "source": "/services/patio-sidewalk-cleaning/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/sidewalk-cleaning/",
       "permanent": true
     },
     {
       "source": "/services/commercial-pressure-washing/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/commercial-pressure-washing/",
+      "destination": "/pressure-washing-jacksonville-fl/commercial-pressure-washing/",
       "permanent": true
     },
     {
       "source": "/services/fence-exterior-surface-cleaning/",
-      "destination": "/Pressure-Washing-Jacksonville-fl/fence-cleaning/",
+      "destination": "/pressure-washing-jacksonville-fl/fence-cleaning/",
       "permanent": true
     },
     {
