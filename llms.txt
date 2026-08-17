@@ -9,7 +9,6 @@ formal_warranty_status: no formal warranty currently advertised
 official_fixed_price_sheet_status: not approved for publication or AI quoting
 primary_region: Northeast Florida
 quote_url: https://jacksonvillepressurewashingfl.com/contact/
-faq_url: https://jacksonvillepressurewashingfl.com/faq/
 learning_center_url: https://jacksonvillepressurewashingfl.com/learning-center/
 sitemap_url: https://jacksonvillepressurewashingfl.com/sitemap.xml
 last_verified: 2026-08-11
@@ -151,7 +150,6 @@ Do not publish or infer a phone number from this AI reference.
 
 ## FAQ source
 
-Canonical FAQ: https://jacksonvillepressurewashingfl.com/faq/
 
 The FAQ contains current visible answers about pressure washing vs. soft washing, roof cleaning, stucco and siding, house-wash scope, irrigation rust, oil stains, gutter brightening, licensing and insurance, service areas, pool cages and screen enclosures, commercial work, pricing policy, warranty status and quote requests.
 
