@@ -1,0 +1,102 @@
+name: Limit city service-area links
+on:
+  push:
+    paths:
+      - '.github/workflows/limit-city-service-area-links.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Keep city links only on parent county pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, json
+
+          orange='/service-areas/orange-park/'
+          fern='/service-areas/fernandina-beach/'
+          orange_abs='https://jacksonvillepressurewashingfl.com/service-areas/orange-park/'
+          fern_abs='https://jacksonvillepressurewashingfl.com/service-areas/fernandina-beach/'
+          allowed={orange:'service-areas/clay-county/index.html', fern:'service-areas/nassau-county/index.html'}
+          changed=[]
+
+          def remove_anchor(s, href):
+              patterns=[href, 'https://jacksonvillepressurewashingfl.com'+href]
+              for h in patterns:
+                  s=re.sub(r'<a\b[^>]*href=["\']'+re.escape(h)+r'["\'][^>]*>.*?</a>','',s,flags=re.I|re.S)
+              return s
+
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              key=str(p).replace('\\','/')
+              s=p.read_text(encoding='utf-8')
+              old=s
+              for href in (orange,fern):
+                  if key != allowed[href]:
+                      s=remove_anchor(s,href)
+              if s!=old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(key)
+
+          # The main service-area hub visibly lists only four top-level areas,
+          # so keep its ItemList schema aligned with that visible content.
+          hub=Path('service-areas/index.html')
+          s=hub.read_text(encoding='utf-8')
+          old=s
+          scripts=re.findall(r'(<script\s+type="application/ld\+json"[^>]*>)(.*?)(</script>)',s,re.S|re.I)
+          for opener,payload,closer in scripts:
+              try: data=json.loads(payload)
+              except Exception: continue
+              changed_json=False
+              for node in data.get('@graph',[]) if isinstance(data,dict) else []:
+                  if isinstance(node,dict) and node.get('@type')=='ItemList' and node.get('@id','').endswith('/service-areas/#areas'):
+                      items=node.get('itemListElement',[]) or []
+                      items=[x for x in items if x.get('url') not in (orange_abs,fern_abs)]
+                      for i,x in enumerate(items,1): x['position']=i
+                      node['itemListElement']=items
+                      node['numberOfItems']=len(items)
+                      changed_json=True
+              if changed_json:
+                  new_payload=json.dumps(data,separators=(',',':'))
+                  s=s.replace(opener+payload+closer,opener+new_payload+closer,1)
+          if s!=old:
+              hub.write_text(s,encoding='utf-8')
+              if 'service-areas/index.html' not in changed: changed.append('service-areas/index.html')
+
+          # QA: city pages remain live and sitemap retains them.
+          for city in ('service-areas/orange-park/index.html','service-areas/fernandina-beach/index.html'):
+              assert Path(city).exists(), city
+          sm=Path('sitemap.xml').read_text(encoding='utf-8')
+          assert orange_abs in sm and fern_abs in sm, 'city sitemap entries missing'
+
+          # QA: only the intended county page may contain each internal city anchor.
+          found={orange:[],fern:[]}
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              key=str(p).replace('\\','/')
+              s=p.read_text(encoding='utf-8')
+              for href in (orange,fern):
+                  if re.search(r'href=["\'](?:https://jacksonvillepressurewashingfl\.com)?'+re.escape(href)+r'["\']',s,re.I):
+                      found[href].append(key)
+          assert found[orange]==['service-areas/clay-county/index.html'], found[orange]
+          assert found[fern]==['service-areas/nassau-county/index.html'], found[fern]
+
+          hs=hub.read_text(encoding='utf-8')
+          assert '"numberOfItems":4' in hs, 'hub ItemList not reduced to 4'
+          assert orange_abs not in re.search(r'<script\s+type="application/ld\+json"[^>]*>(.*?)</script>',hs,re.S|re.I).group(1)
+          assert fern_abs not in re.search(r'<script\s+type="application/ld\+json"[^>]*>(.*?)</script>',hs,re.S|re.I).group(1)
+          print('PASS: Orange Park linked only from Clay County; Fernandina Beach linked only from Nassau County; hub schema aligned to four top-level areas')
+          print('changed files:',len(changed))
+      - name: Commit cleanup and self-delete workflow
+        run: |
+          rm .github/workflows/limit-city-service-area-links.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Limit city service-area links to parent county pages'
+          git push
