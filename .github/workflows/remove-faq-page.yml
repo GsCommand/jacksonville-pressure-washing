@@ -1,0 +1,84 @@
+name: Remove standalone FAQ page
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-faq-page.yml'
+permissions:
+  contents: write
+jobs:
+  remove:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove FAQ page and all internal FAQ URL references
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          faq = Path('faq/index.html')
+          if not faq.exists():
+              raise SystemExit('faq/index.html not found')
+          faq.unlink()
+
+          changed=[]
+          # Remove every HTML link to the deleted standalone FAQ page.
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8')
+              old=s
+              s=re.sub(r'<a\b[^>]*href=["\']/faq/["\'][^>]*>.*?</a>','',s,flags=re.I|re.S)
+              if s!=old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(str(p))
+
+          # Remove the /faq/ URL entry from the sitemap without touching other URLs.
+          sm=Path('sitemap.xml')
+          if sm.exists():
+              s=sm.read_text(encoding='utf-8')
+              old=s
+              s=re.sub(r'<url>\s*<loc>https://jacksonvillepressurewashingfl\.com/faq/</loc>.*?</url>','',s,flags=re.I|re.S)
+              s=re.sub(r'<loc>https://jacksonvillepressurewashingfl\.com/faq/</loc>','',s,flags=re.I)
+              if s!=old:
+                  sm.write_text(s,encoding='utf-8')
+                  changed.append(str(sm))
+
+          # Remove stale plain-text references such as llms.txt entries.
+          for p in Path('.').rglob('*.txt'):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8')
+              lines=s.splitlines()
+              kept=[line for line in lines if '/faq/' not in line]
+              if kept!=lines:
+                  p.write_text('\n'.join(kept)+('\n' if s.endswith('\n') else ''),encoding='utf-8')
+                  changed.append(str(p))
+
+          print('changed files:', len(set(changed)))
+          for x in sorted(set(changed)):
+              print(x)
+
+          # QA: the page is gone and no current site file references /faq/ anymore.
+          if Path('faq/index.html').exists():
+              raise SystemExit('FAQ page still exists')
+          leftovers=[]
+          for ext in ('*.html','*.xml','*.txt','*.json'):
+              for p in Path('.').rglob(ext):
+                  if '.git' in p.parts or '.github' in p.parts:
+                      continue
+                  try: s=p.read_text(encoding='utf-8')
+                  except UnicodeDecodeError: continue
+                  if '/faq/' in s:
+                      leftovers.append(str(p))
+          if leftovers:
+              raise SystemExit('Leftover /faq/ references: '+', '.join(leftovers))
+          print('PASS: FAQ page deleted; sitemap, nav, footers and all internal /faq/ references removed')
+      - name: Commit cleanup and self-delete workflow
+        run: |
+          rm .github/workflows/remove-faq-page.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Remove standalone FAQ page and sitewide links'
+          git push
