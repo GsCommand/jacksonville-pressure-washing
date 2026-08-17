@@ -1,0 +1,80 @@
+name: Remove city links from footers
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-city-footer-links.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove Orange Park and Fernandina Beach from footers only
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          targets=(
+              '/service-areas/orange-park/',
+              '/service-areas/fernandina-beach/'
+          )
+          changed=[]
+          footers_seen=0
+
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8')
+              m=re.search(r'<footer\b[^>]*>.*?</footer>',s,flags=re.I|re.S)
+              if not m:
+                  continue
+              footers_seen+=1
+              footer=m.group(0)
+              new_footer=footer
+              for href in targets:
+                  new_footer=re.sub(
+                      r'<a\b[^>]*href=["\']'+re.escape(href)+r'["\'][^>]*>.*?</a>',
+                      '',
+                      new_footer,
+                      flags=re.I|re.S
+                  )
+              if new_footer!=footer:
+                  s=s[:m.start()]+new_footer+s[m.end():]
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(str(p))
+
+          if not changed:
+              raise SystemExit('No footer links were changed')
+
+          leftovers=[]
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8')
+              m=re.search(r'<footer\b[^>]*>.*?</footer>',s,flags=re.I|re.S)
+              if not m:
+                  continue
+              footer=m.group(0)
+              for href in targets:
+                  if re.search(r'href=["\']'+re.escape(href)+r'["\']',footer,flags=re.I):
+                      leftovers.append(f'{p}:{href}')
+
+          if leftovers:
+              raise SystemExit('Footer links still present: '+', '.join(leftovers))
+
+          # Verify the city pages still exist; this is a footer-only cleanup.
+          for city in ('service-areas/orange-park/index.html','service-areas/fernandina-beach/index.html'):
+              if not Path(city).exists():
+                  raise SystemExit('City page missing: '+city)
+
+          print(f'PASS: removed city footer links from {len(changed)} files; checked {footers_seen} footers; city pages preserved')
+      - name: Commit footer cleanup and self-delete workflow
+        run: |
+          rm .github/workflows/remove-city-footer-links.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Remove Orange Park and Fernandina Beach from footers'
+          git push
