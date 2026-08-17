@@ -1,0 +1,318 @@
+name: Deep SEO audit Learning Center
+on:
+  push:
+    paths:
+      - '.github/workflows/deep-audit-learning-center.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit 53 Learning Center articles
+        shell: python
+        run: |
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse, unquote
+          import re, json, html, math, statistics, itertools, collections
+
+          ROOT = Path('.')
+          files = sorted(Path('learning-center').glob('*/*/index.html'))
+          if len(files) != 53:
+              raise SystemExit(f'Expected 53 articles, found {len(files)}')
+
+          def strip_tags(s):
+              s = re.sub(r'<script\b[^>]*>.*?</script>', ' ', s, flags=re.S|re.I)
+              s = re.sub(r'<style\b[^>]*>.*?</style>', ' ', s, flags=re.S|re.I)
+              s = re.sub(r'<[^>]+>', ' ', s)
+              return re.sub(r'\s+', ' ', html.unescape(s)).strip()
+
+          def words(s):
+              return re.findall(r"[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)?", s.lower())
+
+          stop = set('the a an and or but for of in on to is are was were be been being with by from at as it this that these those your you our we us they their how what why when where who can should does do did will would could about into than vs near best guide florida jacksonville fl'.split())
+          def core_tokens(s):
+              return {w for w in words(s) if len(w) > 2 and w not in stop}
+
+          def visible_article(htmls):
+              m = re.search(r'<div class="article-content"[^>]*>(.*?)</div>\s*</article>', htmls, re.S|re.I)
+              if not m:
+                  m = re.search(r'<div class="article-content"[^>]*>(.*?)(?:</article>|</main>)', htmls, re.S|re.I)
+              return m.group(1) if m else htmls
+
+          def body_for_similarity(htmls):
+              body = visible_article(htmls)
+              body = re.sub(r'<div class="faq">.*?</div>', ' ', body, flags=re.S|re.I)
+              body = re.sub(r'<div class="related">.*?</div>', ' ', body, flags=re.S|re.I)
+              return strip_tags(body)
+
+          def shingles(text, n=5):
+              ws = [w for w in words(text) if len(w)>1]
+              return set(tuple(ws[i:i+n]) for i in range(max(0,len(ws)-n+1)))
+
+          def jaccard(a,b):
+              if not a or not b: return 0.0
+              return len(a & b) / len(a | b)
+
+          all_paths = {str(p).replace('\\','/') for p in ROOT.rglob('*') if p.is_file()}
+          all_dirs = {str(p).replace('\\','/') for p in ROOT.rglob('*') if p.is_dir()}
+
+          rows=[]
+          paragraphs_by_page={}
+          shingle_by_page={}
+          titles=collections.defaultdict(list); metas=collections.defaultdict(list); h1s=collections.defaultdict(list)
+
+          for p in files:
+              s=p.read_text(encoding='utf-8')
+              rel=str(p).replace('\\','/')
+              category=p.parts[1]
+              title_m=re.search(r'<title>(.*?)</title>',s,re.S|re.I)
+              title=strip_tags(title_m.group(1)) if title_m else ''
+              meta_m=re.search(r'<meta\s+name="description"\s+content="([^"]*)"',s,re.I)
+              meta=html.unescape(meta_m.group(1)).strip() if meta_m else ''
+              canonical_m=re.search(r'<link\s+rel="canonical"\s+href="([^"]+)"',s,re.I)
+              canonical=canonical_m.group(1).strip() if canonical_m else ''
+              robots_m=re.search(r'<meta\s+name="robots"\s+content="([^"]+)"',s,re.I)
+              robots=robots_m.group(1).lower() if robots_m else ''
+              h1_raw=re.findall(r'<h1\b[^>]*>(.*?)</h1>',s,re.S|re.I)
+              h1=strip_tags(h1_raw[0]) if h1_raw else ''
+              h2s=[strip_tags(x) for x in re.findall(r'<h2\b[^>]*>(.*?)</h2>',visible_article(s),re.S|re.I)]
+              h3s=[strip_tags(x) for x in re.findall(r'<h3\b[^>]*>(.*?)</h3>',visible_article(s),re.S|re.I)]
+              article_markup=visible_article(s)
+              article_text=strip_tags(article_markup)
+              wc=len(words(article_text))
+              quick=bool(re.search(r'class="quick-answer"',article_markup,re.I)) or 'quick answer' in article_text[:220].lower()
+              list_count=len(re.findall(r'<(?:ul|ol)\b',article_markup,re.I))
+              table_count=len(re.findall(r'<table\b',article_markup,re.I))
+              imgs=len(re.findall(r'<img\b',article_markup,re.I))
+              links=re.findall(r'<a\b[^>]*href="([^"]+)"[^>]*>(.*?)</a>',article_markup,re.S|re.I)
+              internal=[]; external=[]
+              for href,anch in links:
+                  if href.startswith(('http://','https://')):
+                      if 'jacksonvillepressurewashingfl.com' in href: internal.append((href,strip_tags(anch)))
+                      else: external.append((href,strip_tags(anch)))
+                  elif href.startswith('/'):
+                      internal.append((href,strip_tags(anch)))
+              unique_internal=sorted(set(h for h,a in internal))
+              lc_links=[h for h in unique_internal if h.startswith('/learning-center/')]
+              service_links=[h for h in unique_internal if any(h.startswith(x) for x in ['/pressure-washing-jacksonville-fl/','/house-washing-jacksonville-fl/','/roof-cleaning-jacksonville-fl/','/gutter-cleaning-jacksonville-fl/','/service-areas/']) and not h.startswith('/learning-center/')]
+              cta_links=[h for h in unique_internal if h.startswith('/contact')]
+
+              broken=[]
+              for href in unique_internal:
+                  if href.startswith('http'): continue
+                  path=unquote(href.split('#')[0].split('?')[0]).strip('/')
+                  if not path: continue
+                  candidates=[path, path+'/index.html', path+'.html']
+                  if not any(c in all_paths or c in all_dirs for c in candidates):
+                      broken.append(href)
+
+              # JSON-LD
+              json_valid=True; types=[]; faq_count=0; blog_wc=None; date_mod=''
+              for raw in re.findall(r'<script\s+type="application/ld\+json"[^>]*>(.*?)</script>',s,re.S|re.I):
+                  try:
+                      data=json.loads(raw)
+                  except Exception:
+                      json_valid=False; continue
+                  nodes=[]
+                  if isinstance(data,dict):
+                      nodes=data.get('@graph') if isinstance(data.get('@graph'),list) else [data]
+                  for n in nodes:
+                      if not isinstance(n,dict): continue
+                      t=n.get('@type')
+                      if isinstance(t,list): types.extend(t)
+                      elif t: types.append(t)
+                      if t=='FAQPage': faq_count=len(n.get('mainEntity',[]) or [])
+                      if t=='BlogPosting':
+                          blog_wc=n.get('wordCount')
+                          date_mod=n.get('dateModified','')
+              visible_faq=len(re.findall(r'<details[^>]*>\s*<summary>',article_markup,re.S|re.I))
+              author_review=bool(re.search(r'Written and reviewed by Jacksonville Pressure Washing',s,re.I))
+              licensed=bool(re.search(r'licensed and insured',s,re.I))
+              og_article=bool(re.search(r'<meta\s+property="og:type"\s+content="article"',s,re.I))
+              hreflang=bool(re.search(r'hreflang="en-US"',s,re.I))
+              text_lower=article_text.lower()
+              local_hits=sum(1 for term in ['jacksonville','northeast florida','florida','duval','st. johns','clay county','nassau','ponte vedra','nocatee','orange park','fernandina'] if term in text_lower)
+              title_local='jacksonville' in title.lower() or 'florida' in title.lower()
+              intro=' '.join(words(article_text)[:180])
+              title_core=core_tokens(title)
+              h1_core=core_tokens(h1)
+              slug_core=core_tokens(p.parent.name.replace('-',' '))
+              intro_core=core_tokens(intro)
+              title_h1_overlap=(len(title_core & h1_core)/max(1,len(title_core|h1_core)))
+              slug_title_overlap=(len(slug_core & title_core)/max(1,len(slug_core))) if slug_core else 0
+              intro_overlap=(len(title_core & intro_core)/max(1,len(title_core))) if title_core else 0
+
+              paras=[]
+              for pr in re.findall(r'<p\b[^>]*>(.*?)</p>',article_markup,re.S|re.I):
+                  t=strip_tags(pr)
+                  if len(words(t))>=12 and 'Written and reviewed by Jacksonville Pressure Washing' not in t:
+                      paras.append(re.sub(r'\s+',' ',t.lower()).strip())
+              paragraphs_by_page[rel]=paras
+              simtext=body_for_similarity(s)
+              shingle_by_page[rel]=shingles(simtext)
+
+              titles[title.lower()].append(rel); metas[meta.lower()].append(rel); h1s[h1.lower()].append(rel)
+
+              row=dict(path=rel,category=category,title=title,meta=meta,h1=h1,canonical=canonical,robots=robots,
+                       wc=wc,h2=len(h2s),h3=len(h3s),quick=quick,lists=list_count,tables=table_count,imgs=imgs,
+                       internal=len(unique_internal),lc_links=len(lc_links),service_links=len(service_links),cta=len(cta_links),external=len(external),broken=len(broken),broken_urls=broken,
+                       json_valid=json_valid,types=types,faq_visible=visible_faq,faq_schema=faq_count,blog_wc=blog_wc,date_mod=date_mod,
+                       author_review=author_review,licensed=licensed,og_article=og_article,hreflang=hreflang,local_hits=local_hits,title_local=title_local,
+                       title_h1_overlap=title_h1_overlap,slug_title_overlap=slug_title_overlap,intro_overlap=intro_overlap,
+                       h2s=h2s,internal_urls=unique_internal,external_urls=[h for h,a in external])
+              rows.append(row)
+
+          # Pairwise similarity
+          max_sim={r['path']:(0.0,'') for r in rows}
+          for a,b in itertools.combinations([r['path'] for r in rows],2):
+              sim=jaccard(shingle_by_page[a],shingle_by_page[b])
+              if sim>max_sim[a][0]: max_sim[a]=(sim,b)
+              if sim>max_sim[b][0]: max_sim[b]=(sim,a)
+
+          # Repeated paragraphs across pages
+          para_pages=collections.defaultdict(set)
+          for path,paras in paragraphs_by_page.items():
+              for para in set(paras): para_pages[para].add(path)
+          repeated_para_counts={r['path']:0 for r in rows}
+          repeated_examples={r['path']:[] for r in rows}
+          for para,pages in para_pages.items():
+              if len(pages)>=2:
+                  for path in pages:
+                      repeated_para_counts[path]+=1
+                      if len(repeated_examples[path])<3: repeated_examples[path].append((len(pages),para[:180]))
+
+          # Score rubric, intentionally not word-count obsessed.
+          def score(r):
+              tech=0
+              tech += 3 if r['canonical'] else 0
+              tech += 2 if ('index' in r['robots'] and 'noindex' not in r['robots']) else 0
+              tech += 2 if r['h1'] else 0
+              tech += 2 if r['json_valid'] else 0
+              tech += 2 if 'BlogPosting' in r['types'] else 0
+              tech += 2 if 'BreadcrumbList' in r['types'] else 0
+              tech += 2 if ('FAQPage' in r['types'] and r['faq_visible']==r['faq_schema'] and r['faq_visible']>0) else 0
+
+              intent=0
+              intent += 4 if r['title_h1_overlap']>=0.45 else (3 if r['title_h1_overlap']>=0.25 else 1)
+              intent += 2 if 28<=len(r['title'])<=72 else (1 if r['title'] else 0)
+              intent += 2 if 110<=len(r['meta'])<=185 else (1 if 70<=len(r['meta'])<=220 else 0)
+              intent += 3 if r['slug_title_overlap']>=0.55 else (2 if r['slug_title_overlap']>=0.35 else 1)
+              intent += 2 if r['quick'] else 0
+              intent += 2 if r['intro_overlap']>=0.45 else (1 if r['intro_overlap']>=0.25 else 0)
+
+              content=0
+              content += 5 if r['wc']>=650 else (4 if r['wc']>=500 else (2 if r['wc']>=350 else 0))
+              content += 4 if r['h2']>=5 else (3 if r['h2']>=3 else (1 if r['h2']>=2 else 0))
+              content += 3 if (r['lists']+r['tables'])>=2 else (2 if (r['lists']+r['tables'])>=1 else 0)
+              content += 3 if r['faq_visible']>=3 else (2 if r['faq_visible']>=2 else 0)
+              ms=max_sim[r['path']][0]
+              content += 5 if ms<0.18 else (4 if ms<0.25 else (2 if ms<0.35 else 0))
+              rp=repeated_para_counts[r['path']]
+              content += 5 if rp<=1 else (4 if rp<=3 else (2 if rp<=6 else 0))
+
+              links=0
+              links += 4 if r['internal']>=4 else (3 if r['internal']>=3 else (2 if r['internal']>=2 else 0))
+              links += 4 if r['lc_links']>=2 else (2 if r['lc_links']==1 else 0)
+              links += 4 if r['service_links']>=1 else 0
+              links += 2 if r['cta']>=1 else 0
+              links += 1 if r['broken']==0 else 0
+
+              trust=0
+              trust += 4 if r['author_review'] else 0
+              trust += 2 if r['licensed'] else 0
+              trust += 3 if r['external']>=1 else 0
+              trust += 3 if r['local_hits']>=3 else (2 if r['local_hits']>=2 else (1 if r['local_hits']>=1 else 0))
+              trust += 3 if r['imgs']>=1 else 0
+
+              local=0
+              local += 3 if r['title_local'] else (2 if 'jacksonville' in r['h1'].lower() or 'florida' in r['h1'].lower() else 0)
+              local += 3 if r['local_hits']>=3 else (2 if r['local_hits']>=2 else (1 if r['local_hits']>=1 else 0))
+              local += 2 if ('jacksonville' in intro or 'florida' in intro) else 0
+              local += 2 if any('/service-areas/' in u for u in r['internal_urls']) else 0
+
+              dup=0
+              dup += 1 if len(titles[r['title'].lower()])==1 else 0
+              dup += 1 if len(metas[r['meta'].lower()])==1 else 0
+              dup += 1 if len(h1s[r['h1'].lower()])==1 else 0
+              dup += 2 if max_sim[r['path']][0]<0.25 else (1 if max_sim[r['path']][0]<0.35 else 0)
+
+              total=tech+intent+content+links+trust+local+dup
+              return dict(total=total,technical=tech,intent=intent,content=content,links=links,trust=trust,local=local,dup=dup)
+
+          for r in rows:
+              r['max_similarity'],r['similar_to']=max_sim[r['path']]
+              r['repeated_paragraphs']=repeated_para_counts[r['path']]
+              r['repeated_examples']=repeated_examples[r['path']]
+              r['scores']=score(r)
+
+          # Summary
+          scores=[r['scores']['total'] for r in rows]
+          print('=== DEEP SEO AUDIT SUMMARY ===')
+          print(f'ARTICLES\t{len(rows)}')
+          print(f'AVERAGE_SCORE\t{statistics.mean(scores):.1f}')
+          print(f'MEDIAN_SCORE\t{statistics.median(scores):.1f}')
+          print(f'MIN_SCORE\t{min(scores)}')
+          print(f'MAX_SCORE\t{max(scores)}')
+          print(f'WORDS_MIN\t{min(r["wc"] for r in rows)}')
+          print(f'WORDS_MEDIAN\t{statistics.median(r["wc"] for r in rows):.0f}')
+          print(f'WORDS_MAX\t{max(r["wc"] for r in rows)}')
+          print(f'BROKEN_INTERNAL_LINKS_TOTAL\t{sum(r["broken"] for r in rows)}')
+          print(f'ARTICLES_WITH_EXTERNAL_CITATIONS\t{sum(r["external"]>0 for r in rows)}')
+          print(f'ARTICLES_WITH_CONTENT_IMAGES\t{sum(r["imgs"]>0 for r in rows)}')
+          print(f'ARTICLES_WITH_CONTACT_CTA\t{sum(r["cta"]>0 for r in rows)}')
+          print(f'ARTICLES_WITH_SERVICE_LINK\t{sum(r["service_links"]>0 for r in rows)}')
+          print(f'ARTICLES_WITH_2PLUS_LC_LINKS\t{sum(r["lc_links"]>=2 for r in rows)}')
+          print(f'DUPLICATE_TITLES\t{sum(1 for k,v in titles.items() if k and len(v)>1)}')
+          print(f'DUPLICATE_METAS\t{sum(1 for k,v in metas.items() if k and len(v)>1)}')
+          print(f'DUPLICATE_H1S\t{sum(1 for k,v in h1s.items() if k and len(v)>1)}')
+          print(f'PAIR_SIM_OVER_035\t{sum(1 for a,b in itertools.combinations([r["path"] for r in rows],2) if jaccard(shingle_by_page[a],shingle_by_page[b])>=0.35)}')
+          print(f'PAIR_SIM_OVER_025\t{sum(1 for a,b in itertools.combinations([r["path"] for r in rows],2) if jaccard(shingle_by_page[a],shingle_by_page[b])>=0.25)}')
+
+          print('\n=== CATEGORY SCORES ===')
+          cats=collections.defaultdict(list)
+          for r in rows: cats[r['category']].append(r['scores']['total'])
+          for c,vals in sorted(cats.items()):
+              print(f'{c}\t{len(vals)}\t{statistics.mean(vals):.1f}')
+
+          print('\n=== PER ARTICLE TSV ===')
+          print('score\tcategory\twords\th2\tinternal\tlc\tservice\tcta\texternal\timages\tlocal_hits\tmax_sim\trepeat_para\ttitle\tpath')
+          for r in sorted(rows,key=lambda x:(x['scores']['total'],x['title'])):
+              print(f"{r['scores']['total']}\t{r['category']}\t{r['wc']}\t{r['h2']}\t{r['internal']}\t{r['lc_links']}\t{r['service_links']}\t{r['cta']}\t{r['external']}\t{r['imgs']}\t{r['local_hits']}\t{r['max_similarity']:.3f}\t{r['repeated_paragraphs']}\t{r['title']}\t{r['path']}")
+
+          print('\n=== TOP 10 ===')
+          for r in sorted(rows,key=lambda x:x['scores']['total'],reverse=True)[:10]:
+              print(f"{r['scores']['total']}\t{r['title']}\t{r['path']}")
+          print('\n=== BOTTOM 15 ===')
+          for r in sorted(rows,key=lambda x:x['scores']['total'])[:15]:
+              print(f"{r['scores']['total']}\t{r['title']}\t{r['path']}")
+
+          print('\n=== HIGH SIMILARITY PAGES ===')
+          for r in sorted(rows,key=lambda x:x['max_similarity'],reverse=True)[:15]:
+              print(f"{r['max_similarity']:.3f}\t{r['title']}\t<->\t{r['similar_to']}")
+
+          print('\n=== BROKEN LINKS ===')
+          for r in rows:
+              if r['broken']:
+                  print(r['path'], ' | ', ', '.join(r['broken_urls']))
+
+          print('\n=== SCORE COMPONENTS BOTTOM 15 ===')
+          for r in sorted(rows,key=lambda x:x['scores']['total'])[:15]:
+              sc=r['scores']
+              print(f"{sc['total']}\tT{sc['technical']}/15 I{sc['intent']}/15 C{sc['content']}/25 L{sc['links']}/15 E{sc['trust']}/15 LOC{sc['local']}/10 D{sc['dup']}/5\t{r['title']}")
+
+          print('\n=== ARTICLES JSON ===')
+          compact=[]
+          for r in rows:
+              compact.append({k:r[k] for k in ['path','category','title','meta','h1','wc','h2','h3','quick','lists','tables','imgs','internal','lc_links','service_links','cta','external','broken','faq_visible','faq_schema','author_review','licensed','local_hits','title_local','max_similarity','similar_to','repeated_paragraphs','scores']})
+          print(json.dumps(compact,ensure_ascii=False))
+      - name: Self-delete audit workflow
+        run: |
+          rm .github/workflows/deep-audit-learning-center.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/workflows/deep-audit-learning-center.yml
+          git commit -m 'Remove temporary Learning Center SEO audit'
+          git push
