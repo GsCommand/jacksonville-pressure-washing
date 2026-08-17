@@ -1,0 +1,84 @@
+name: Service architecture pass 2
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/architecture-pass-2.yml']
+permissions:
+  contents: write
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update page ownership redirects and sitemap
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,re
+          W=Path('.github/workflows/architecture-pass-2.yml')
+          # Homepage = brand/all-services hub.
+          p=Path('index.html'); s=p.read_text()
+          s=s.replace('Pressure Washing Jacksonville FL | Power Washing & House Washing','Jacksonville Exterior Cleaning | House, Roof, Driveway & Gutters')
+          s=s.replace('Jacksonville pressure washing, power washing and pressure cleaning for houses, roofs, driveways, concrete, gutters, pool areas and exterior surfaces across Northeast Florida.','Exterior cleaning for Jacksonville and Northeast Florida homes, including house washing, roof cleaning, driveways, concrete, gutters, pool areas and related exterior surfaces.')
+          s=s.replace('Jacksonville Pressure Washing &amp; Power Washing','Jacksonville Exterior Cleaning Services').replace('Jacksonville Pressure Washing & Power Washing','Jacksonville Exterior Cleaning Services')
+          s=s.replace('"name":"Pressure Washing and Exterior Cleaning"','"name":"Exterior Cleaning Services"')
+          p.write_text(s)
+          # Jacksonville service-area page = head pressure-washing winner.
+          p=Path('service-areas/jacksonville/index.html'); s=p.read_text()
+          s=s.replace('Pressure Washing Jacksonville FL | House, Roof, Driveway & Gutter Cleaning','Pressure Washing Jacksonville FL | Power Washing & Exterior Cleaning')
+          s=s.replace('Pressure washing in Jacksonville FL for homes and properties across Duval County, including house washing, roof cleaning, driveways, pool areas, gutters and exterior surfaces.','Pressure washing in Jacksonville FL and Duval County, including power washing, house washing, roof cleaning, driveways, concrete, gutters, pool areas and exterior cleaning.')
+          s=s.replace('<h1>Pressure Washing in Jacksonville, FL</h1>','<h1>Pressure Washing &amp; Power Washing in Jacksonville, FL</h1>')
+          s=s.replace('"name":"Pressure Washing and Exterior Cleaning in Jacksonville"','"name":"Pressure Washing, Power Washing and Exterior Cleaning in Jacksonville"')
+          p.write_text(s)
+          # Promoted roof page identity.
+          p=Path('roof-cleaning-jacksonville-fl/index.html'); s=p.read_text()
+          s=re.sub(r'<title>.*?</title>','<title>Roof Cleaning Jacksonville FL | Roof Washing & Soft Wash</title>',s,count=1,flags=re.S)
+          s=s.replace('<h1>Roof Washing','<h1>Roof Cleaning &amp; Roof Washing')
+          p.write_text(s)
+          # Redirects.
+          vp=Path('vercel.json'); data=json.loads(vp.read_text()); old=data.get('redirects',[])
+          new=[]
+          def add(src,dst): new.append({'source':src,'destination':dst,'permanent':True})
+          for src in ['/Pressure-Washing-Jacksonville-fl','/Pressure-Washing-Jacksonville-fl/','/pressure-washing-jacksonville-fl','/pressure-washing-jacksonville-fl/']: add(src,'/service-areas/jacksonville/')
+          pc=['commercial-pressure-washing','driveway-cleaning','fence-cleaning','pool-deck-cleaning','sidewalk-cleaning']
+          for x in pc:
+            add(f'/Pressure-Washing-Jacksonville-fl/{x}',f'/pressure-washing-jacksonville-fl/{x}/'); add(f'/Pressure-Washing-Jacksonville-fl/{x}/',f'/pressure-washing-jacksonville-fl/{x}/')
+          for src in ['/House-Washing-Jacksonville-FL','/House-Washing-Jacksonville-FL/']: add(src,'/house-washing-jacksonville-fl/')
+          for x in ['soft-washing','pool-cage-cleaning','screen-enclosure-cleaning']:
+            add(f'/House-Washing-Jacksonville-FL/{x}',f'/house-washing-jacksonville-fl/{x}/'); add(f'/House-Washing-Jacksonville-FL/{x}/',f'/house-washing-jacksonville-fl/{x}/')
+          for src in ['/House-Washing-Jacksonville-FL/roof-washing','/House-Washing-Jacksonville-FL/roof-washing/','/house-washing-jacksonville-fl/roof-washing','/house-washing-jacksonville-fl/roof-washing/']: add(src,'/roof-cleaning-jacksonville-fl/')
+          for src in ['/Gutter-Cleaning-Jacksonville-Fl','/Gutter-Cleaning-Jacksonville-Fl/','/Gutters-Jacksonville-Fl','/Gutters-Jacksonville-Fl/']: add(src,'/gutter-cleaning-jacksonville-fl/')
+          for base in ['/Gutters-Jacksonville-Fl','/Gutter-Cleaning-Jacksonville-Fl']:
+            for x in ['gutter-brightening','gutter-cleaning-cost']:
+              add(f'{base}/{x}',f'/gutter-cleaning-jacksonville-fl/{x}/'); add(f'{base}/{x}/',f'/gutter-cleaning-jacksonville-fl/{x}/')
+          sources={r['source'] for r in new}
+          kept=[r for r in old if r.get('source') not in sources]
+          dm={
+            '/services':'/service-areas/jacksonville/','/services/':'/service-areas/jacksonville/','/services/pressure-washing/':'/service-areas/jacksonville/',
+            '/services/house-washing/':'/house-washing-jacksonville-fl/','/services/roof-cleaning/':'/roof-cleaning-jacksonville-fl/','/services/soft-washing/':'/house-washing-jacksonville-fl/soft-washing/',
+            '/services/driveway-concrete-cleaning/':'/pressure-washing-jacksonville-fl/driveway-cleaning/','/services/pool-deck-screen-enclosure-cleaning/':'/pressure-washing-jacksonville-fl/pool-deck-cleaning/',
+            '/services/gutter-cleaning/':'/gutter-cleaning-jacksonville-fl/','/services/gutter-brightening/':'/gutter-cleaning-jacksonville-fl/gutter-brightening/','/services/patio-sidewalk-cleaning/':'/pressure-washing-jacksonville-fl/sidewalk-cleaning/','/services/commercial-pressure-washing/':'/pressure-washing-jacksonville-fl/commercial-pressure-washing/','/services/fence-exterior-surface-cleaning/':'/pressure-washing-jacksonville-fl/fence-cleaning/'}
+          for r in kept:
+            if r.get('source') in dm: r['destination']=dm[r['source']]
+          data['redirects']=new+kept; vp.write_text(json.dumps(data,indent=2)+'\n')
+          # Sitemap canonicalization.
+          sp=Path('sitemap.xml'); txt=sp.read_text(); urls=re.findall(r'<loc>(.*?)</loc>',txt)
+          swaps={
+            '/Pressure-Washing-Jacksonville-fl/commercial-pressure-washing/':'/pressure-washing-jacksonville-fl/commercial-pressure-washing/','/Pressure-Washing-Jacksonville-fl/driveway-cleaning/':'/pressure-washing-jacksonville-fl/driveway-cleaning/','/Pressure-Washing-Jacksonville-fl/fence-cleaning/':'/pressure-washing-jacksonville-fl/fence-cleaning/','/Pressure-Washing-Jacksonville-fl/pool-deck-cleaning/':'/pressure-washing-jacksonville-fl/pool-deck-cleaning/','/Pressure-Washing-Jacksonville-fl/sidewalk-cleaning/':'/pressure-washing-jacksonville-fl/sidewalk-cleaning/',
+            '/House-Washing-Jacksonville-FL/roof-washing/':'/roof-cleaning-jacksonville-fl/','/House-Washing-Jacksonville-FL/':'/house-washing-jacksonville-fl/','/Gutters-Jacksonville-Fl/gutter-brightening/':'/gutter-cleaning-jacksonville-fl/gutter-brightening/','/Gutters-Jacksonville-Fl/gutter-cleaning-cost/':'/gutter-cleaning-jacksonville-fl/gutter-cleaning-cost/','/Gutter-Cleaning-Jacksonville-Fl/':'/gutter-cleaning-jacksonville-fl/'}
+          for x in ['soft-washing','pool-cage-cleaning','screen-enclosure-cleaning']: swaps[f'/House-Washing-Jacksonville-FL/{x}/']=f'/house-washing-jacksonville-fl/{x}/'
+          out=[]
+          for u in urls:
+            for a,b in swaps.items(): u=u.replace(a,b)
+            if u.endswith('/Pressure-Washing-Jacksonville-fl/') or u.endswith('/pressure-washing-jacksonville-fl/'): continue
+            if u not in out: out.append(u)
+          sp.write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'  <url><loc>{u}</loc></url>\n' for u in out)+'</urlset>\n')
+          W.unlink()
+          PY
+      - name: Commit
+        run: |
+          git config user.name "Greg Soucy"
+          git config user.email "GREG@COMMANDLAYER.ORG"
+          git add -A
+          git commit -m "Assign canonical service ownership and redirects"
+          git push
